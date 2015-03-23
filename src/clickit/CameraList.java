@@ -31,6 +31,22 @@ public class CameraList {
 
         /*this.openFile();*/
     }
+    
+    /**
+     * Gets the ArrayList which stores all the Camera objects.
+     * @return returns an ArrayList of type Camera.
+     */
+    public ArrayList<Camera> getCameras() {
+        return cameras;
+    }
+    
+    /**
+     * Sets the ArrayList of type Camera.
+     * @param cameras the new ArrayList of type Camera.
+     */
+    public void setCameras(ArrayList<Camera> cameras) {
+        this.cameras = cameras;
+    }
 
     /**
      * Method to add a new camera to the list.
