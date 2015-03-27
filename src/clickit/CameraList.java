@@ -29,7 +29,7 @@ public class CameraList {
     public CameraList() {
         cameras = new ArrayList<>();
 
-        /*this.openFile();*/
+        this.openFile();
     }
     
     /**
@@ -58,7 +58,7 @@ public class CameraList {
     }
 
     /**
-     * Metho to remove a camera from the list.
+     * Method to remove a camera from the list.
      *
      * @param camera the camera to be removed from the list as a Camera.
      */
@@ -68,6 +68,31 @@ public class CameraList {
                 cameras.remove(i);
             }
         }
+    }
+    
+    /**
+     * Method to return the amount of cameras stored in the list.
+     * @return returns the amount of cameras stored in the list as an int.
+     */
+    public int size(){
+        return cameras.size();
+    }
+    
+    /**
+     * Method to return the contents of the CameraList as an Object.
+     * @return returns the contents of the CameraList as an Object.
+     */
+    public Object getArray(){
+        return cameras.toArray();
+    }
+    
+    /**
+     * Method to return a Camera object.
+     * @param i the index of the Camera object you want to get.
+     * @return returns a Camera object.
+     */
+    public Camera getCamera(int i){
+        return cameras.get(i);
     }
 
     /**
@@ -81,6 +106,7 @@ public class CameraList {
                 writer.println(cameras.get(i).writeToFile());
                 System.out.println("Writing to file complete");
             }
+            writer.close();
         } catch (IOException ex) {
 
         }

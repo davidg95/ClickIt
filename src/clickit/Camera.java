@@ -173,6 +173,14 @@ public class Camera {
     public void setPrice(double price) {
         this.price = price;
     }
+    
+    public String getSensor(){
+        if(full){
+            return "FULL";
+        }
+        
+        return "CROP";
+    }
 
     /**
      * Method to format output for saving to a notepad file.
@@ -182,6 +190,10 @@ public class Camera {
     public String writeToFile() {
         System.out.println("Writing camera to file");
         return this.make + "," + this.model + "," + this.megapixles + "," + (this.full ? "FULL" : "CROP") + "," + this.stock + "," + this.price;
+    }
+    
+    public String toList(){
+        return this.make + "\t" + this.model + "\t" + this.megapixles + "\t" + (this.full ? "FULL" : "CROP") + "\t" + this.stock + "\t£" + this.price;
     }
 
     /**

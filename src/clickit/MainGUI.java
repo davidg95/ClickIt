@@ -5,18 +5,62 @@
  */
 package clickit;
 
+import javax.swing.JList;
 /**
  *
  * @author David
  * @version 23/03/2015
  */
 public class MainGUI extends javax.swing.JFrame {
-
+    
+    CameraList list;
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
+        
+        list = new CameraList();
+        
+        updateList();
+        
+        this.setVisible(true);
+        
+    }
+    
+    /**
+     * Method to update the lists.
+     */
+    public void updateList(){
+        System.out.println("Updating the list");
+        
+        lstName.removeAll();
+        lstMegapixles.removeAll();
+        lstSensor.removeAll();
+        lstStock.removeAll();
+        lstPrice.removeAll();
+        
+        String[] nameItems = new String[list.size()];
+        String[] megapixlesItems = new String[list.size()];
+        String[] sensorItems = new String[list.size()];
+        String[] stockItems = new String[list.size()];
+        String[] priceItems = new String[list.size()];
+        
+        for(int i = 0; i <= (nameItems.length - 1); i++){
+            nameItems[i] = list.getCamera(i).getMake() + " " + list.getCamera(i).getModel();
+            megapixlesItems[i] = "" + list.getCamera(i).getMegapixles();
+            sensorItems[i] = list.getCamera(i).getSensor();
+            stockItems[i] = "" + list.getCamera(i).getStock();
+            priceItems[i] = "£" + list.getCamera(i).getPrice();
+        }
+        
+        lstName.setListData(nameItems);
+        lstMegapixles.setListData(megapixlesItems);
+        lstSensor.setListData(sensorItems);
+        lstStock.setListData(stockItems);
+        lstPrice.setListData(priceItems);
+        
+        System.out.println("List updated");
     }
 
     /**
@@ -28,17 +72,114 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstMegapixles = new javax.swing.JList();
+        btnAddCamera = new javax.swing.JButton();
+        btnDeleteCamera = new javax.swing.JButton();
+        btnSaveCamera = new javax.swing.JButton();
+        btnOpenCamera = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstName = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstSensor = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lstStock = new javax.swing.JList();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        lstPrice = new javax.swing.JList();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lstMegapixles.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(lstMegapixles);
+
+        btnAddCamera.setText("Add Camera");
+        btnAddCamera.setActionCommand("addCamera");
+
+        btnDeleteCamera.setText("Delete Camera");
+        btnDeleteCamera.setActionCommand("deleteCamera");
+
+        btnSaveCamera.setText("Save");
+        btnSaveCamera.setActionCommand("saveFile");
+
+        btnOpenCamera.setText("Open");
+        btnOpenCamera.setActionCommand("openFile");
+
+        lstName.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(lstName);
+
+        lstSensor.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(lstSensor);
+
+        lstStock.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(lstStock);
+
+        lstPrice.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane5.setViewportView(lstPrice);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAddCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteCamera)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSaveCamera)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnOpenCamera))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddCamera)
+                    .addComponent(btnDeleteCamera)
+                    .addComponent(btnSaveCamera)
+                    .addComponent(btnOpenCamera))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         pack();
@@ -80,5 +221,19 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddCamera;
+    private javax.swing.JButton btnDeleteCamera;
+    private javax.swing.JButton btnOpenCamera;
+    private javax.swing.JButton btnSaveCamera;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JList lstMegapixles;
+    private javax.swing.JList lstName;
+    private javax.swing.JList lstPrice;
+    private javax.swing.JList lstSensor;
+    private javax.swing.JList lstStock;
     // End of variables declaration//GEN-END:variables
 }

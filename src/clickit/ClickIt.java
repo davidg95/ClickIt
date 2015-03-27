@@ -17,13 +17,7 @@ public class ClickIt {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CameraList list = new CameraList();
-
-        Camera camera = new Camera("Nikon", "D5100", 16.2, false, 5, 799.99);
-
-        list.addCamera(camera);
-
-        list.saveToFile();
+        MainGUI gui = new MainGUI();
     }
 
 }
