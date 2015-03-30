@@ -8,7 +8,8 @@ package clickit;
 import java.util.Scanner;
 
 /**
- * A class of type Camera which stores details about a camera.
+ * A class of type <code>Camera</code> which stores details about a
+ * <code>Camera</code>.
  *
  * @author David
  * @version 23/03/2015
@@ -23,16 +24,17 @@ public class Camera {
     private double price;
 
     /**
-     * Constructor method for the <code>Camera</code> class which creates an instance of the
-     * camera object.
+     * Constructor method for the <code>Camera</code> class which creates an
+     * instance of the <code>Camera</code> object.
      *
-     * @param make the make of the camera as a String.
-     * @param model the model of the camera as a String.
-     * @param megapixles the megapixels of the camera as a double.
-     * @param ifFull a boolean value to state whether the camera as a full frame
-     * sensor or a crop, true for full and false for crop.
-     * @param stock the current stock level of the camera as an int.
-     * @param price the price of the camera as a double.
+     * @param make the make of the <code>Camera</code> as a String.
+     * @param model the model of the <code>Camera</code> as a String.
+     * @param megapixles the megapixels of the <code>Camera</code> as a double.
+     * @param ifFull a boolean value to state whether the <code>Camera</code> as
+     * a full frame sensor or a crop, true for full and false for crop.
+     * @param stock the current stock level of the <code>Camera</code> as an
+     * int.
+     * @param price the price of the <code>Camera</code> as a double.
      */
     public Camera(String make, String model, double megapixles, boolean ifFull, int stock, double price) {
         this.make = make;
@@ -43,6 +45,12 @@ public class Camera {
         this.price = price;
     }
 
+    /**
+     * Constructor method for the <code>Camera</code> object which creates an
+     * instance of the <code>Camera</code> object.
+     *
+     * @param notepad a line from the notepad file as a String.
+     */
     public Camera(String notepad) {
         Scanner in = new Scanner(notepad);
 
@@ -64,25 +72,25 @@ public class Camera {
 
     //Getter Methods
     /**
-     * Gets the make of the camera.
+     * Gets the make of the <code>Camera</code>.
      *
-     * @return returns the make of the camera as a String.
+     * @return returns the make of the <code>Camera</code> as a String.
      */
     public String getMake() {
         return make;
     }
 
     /**
-     * Gets the model of the camera.
+     * Gets the model of the <code>Camera</code>.
      *
-     * @return returns the model of the camera as a String.
+     * @return returns the model of the <code>Camera</code> as a String.
      */
     public String getModel() {
         return model;
     }
 
     /**
-     * Gets the megapixels of the camera.
+     * Gets the megapixels of the <code>Camera</code>.
      *
      * @return returns the megapixels of the camera as a double.
      */
@@ -91,87 +99,15 @@ public class Camera {
     }
 
     /**
-     * Method to get whether the camera is full frame or crop sensor.
+     * Method to get whether the <code>Camera</code> is full frame or crop
+     * sensor.
      *
-     * @return returns true or false to indicate whether the camera is full
-     * frame or crop sensor. returns true for full frame, false for crop.
+     * @return returns true or false to indicate whether the <code>Camera</code>
+     * is full frame or crop sensor. Returns true for full frame, false for
+     * crop.
      */
     public boolean isFull() {
         return full;
-    }
-
-    /**
-     * Gets the current stock level of the camera.
-     *
-     * @return returns the current stock level of the camera as an int.
-     */
-    public int getStock() {
-        return stock;
-    }
-
-    /**
-     * Gets the price of the camera.
-     *
-     * @return returns the price of the camera as a double.
-     */
-    public double getPrice() {
-        return price;
-    }
-
-    //Setter Methods
-    /**
-     * Sets the make of the camera.
-     *
-     * @param make the value for the make as a String.
-     */
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    /**
-     * Sets the model of the camera.
-     *
-     * @param model the value for the model as a String.
-     */
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    /**
-     * Sets the megapixels of the camera.
-     *
-     * @param megapixles the value for the megapixels as a double.
-     */
-    public void setMegapixles(double megapixles) {
-        this.megapixles = megapixles;
-    }
-
-    /**
-     * Sets whether the camera is full frame or crop sensor.
-     *
-     * @param full true or false to indicate whether the camera is full frame or
-     * crop sensor. Set true for full or false for crop.
-     */
-    public void setFull(boolean full) {
-        this.full = full;
-    }
-
-    /**
-     * Sets the stock level of the camera.
-     *
-     * @param stock the value for the stock level as an int.
-     */
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    /**
-     * Sets the price of the camera.
-     *
-     * @param price the value for the price of the camera as a double.
-     */
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     /**
@@ -187,19 +123,111 @@ public class Camera {
 
         return "CROP";
     }
-    
+
     /**
-     * Method to increase the stock level of the Camera by the amount given.
+     * Gets the current stock level of the <code>Camera</code>.
+     *
+     * @return returns the current stock level of the <code>Camera</code> as an
+     * int.
+     */
+    public int getStock() {
+        return stock;
+    }
+
+    /**
+     * Gets the price of the <code>Camera</code>.
+     *
+     * @return returns the price of the camera as a double.
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    //Setter Methods
+    /**
+     * Sets the make of the <code>Camera</code>.
+     *
+     * @param make the value for the make as a String.
+     */
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    /**
+     * Sets the model of the <code>Camera</code>.
+     *
+     * @param model the value for the model as a String.
+     */
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    /**
+     * Sets the megapixles of the <code>Camera</code>.
+     *
+     * @param megapixles the value for the megapixles as a double.
+     */
+    public void setMegapixles(double megapixles) {
+        this.megapixles = megapixles;
+    }
+
+    /**
+     * Sets whether the <code>Camera</code> is full frame or crop sensor.
+     *
+     * @param full true or false to indicate whether the <code>Camera</code> is
+     * full frame or crop sensor. Set true for full or false for crop.
+     */
+    public void setFull(boolean full) {
+        this.full = full;
+    }
+
+    /**
+     * Sets the stock level of the <code>Camera</code>.
+     *
+     * @param stock the value for the stock level as an int.
+     */
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    /**
+     * Sets the price of the <code>Camera</code>.
+     *
+     * @param price the value for the price of the camera as a double.
+     */
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    /**
+     * Method to increase the stock level of the <code>Camera</code> by the
+     * amount given.
+     *
      * @param stock the amount of stock to be added to the Cameras stock level.
      */
-    public void increaceStock(int stock){
+    public void increaceStock(int stock) {
         this.stock += stock;
         System.out.println("Stock of camera increace by " + stock);
     }
-    
-    public void purchase(){
-        this.stock--;
-        System.out.println("Camera purchased");
+
+    /**
+     * Method to purchase a <code>Camera</code>. It checks whether the
+     * <code>Camera</code> is in stock or not before reducing stock level and
+     * returns true or false to indicate whether the <code>Camera</code> has
+     * been purchased.
+     *
+     * @return returns true if the purchase was successful or false if
+     * unsuccessful.
+     */
+    public boolean purchase() {
+        if (this.stock > 0) {
+            this.stock--;
+            System.out.println("Camera purchased");
+            return true;
+        } else {
+            System.out.println("Camera not purchased, out of stock");
+            return false;
+        }
     }
 
     /**
@@ -213,20 +241,21 @@ public class Camera {
     }
 
     /**
-     * Method to output details of the camera in a single line with all the data
-     * separated by a single tab space.
+     * Method to output details of the <code>Camera</code> in a single line with
+     * all the data separated by a single tab space.
      *
-     * @return returns a String value of the details of the camera in a single
-     * line.
+     * @return returns a String value of the details of the <code>Camera</code>
+     * in a single line.
      */
     public String toList() {
         return this.make + "\t" + this.model + "\t" + this.megapixles + "\t" + (this.full ? "FULL" : "CROP") + "\t" + this.stock + "\t£" + this.price;
     }
 
     /**
-     * ToString method which outputs details of the camera as a String.
+     * ToString method which outputs details of the <code>Camera</code> as a
+     * String.
      *
-     * @return returns details of the camera as a String.
+     * @return returns details of the <code>Camera</code> as a String.
      */
     @Override
     public String toString() {

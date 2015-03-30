@@ -12,7 +12,9 @@ package clickit;
  * @version 23/03/2015
  */
 public class ClickIt {
+
     static MainGUI gui;
+
     /**
      * @param args the command line arguments
      */

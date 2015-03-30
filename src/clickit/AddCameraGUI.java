@@ -5,11 +5,14 @@
  */
 package clickit;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 1301480
  */
 public class AddCameraGUI extends javax.swing.JFrame {
+
     String make;
     String model;
     double megapixles;
@@ -171,63 +174,70 @@ public class AddCameraGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
      * Method to listen for the add button being pressed.
+     *
      * @param evt the event of the button being pressed.
      */
     private void cmdAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAddActionPerformed
-        this.make = this.txtMake.getText();
-        this.model = this.txtModel.getText();
-        this.megapixles = Double.parseDouble(this.txtMegapixles.getText());
-        if(this.radFull.isSelected()){
-            this.full = true;
+        try {
+            this.make = this.txtMake.getText();
+            this.model = this.txtModel.getText();
+            this.megapixles = Double.parseDouble(this.txtMegapixles.getText());
+            if (this.radFull.isSelected()) {
+                this.full = true;
+            } else {
+                this.full = false;
+            }
+            this.stock = Integer.parseInt(this.txtStock.getText());
+            this.price = Double.parseDouble(this.txtPrice.getText());
+
+            Camera newCamera = new Camera(this.make, this.model, this.megapixles, this.full, this.stock, this.price);
+
+            MainGUI.addCamera(newCamera);
+
+            this.closeForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Some fields were left blank or have not been filled in correctly");
         }
-        else{
-            this.full = false;
-        }
-        this.stock = Integer.parseInt(this.txtStock.getText());
-        this.price = Double.parseDouble(this.txtPrice.getText());
-        
-        Camera newCamera = new Camera(this.make, this.model, this.megapixles, this.full, this.stock, this.price);
-        
-        MainGUI.addCamera(newCamera);
-        
-        this.closeForm();
     }//GEN-LAST:event_cmdAddActionPerformed
-    
+
     /**
      * Method to listen for the close button being pressed.
+     *
      * @param evt the event of the button being pressed.
      */
     private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
         this.closeForm();
     }//GEN-LAST:event_cmdCloseActionPerformed
-    
+
     /**
      * Method to listen for the clear button being pressed.
+     *
      * @param evt the event of the clear button being pressed.
      */
     private void cmdClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearActionPerformed
         this.txtMake.setText(null);
         this.txtModel.setText(null);
         this.txtMegapixles.setText(null);
-        if(radCrop.isSelected()){
+        if (radCrop.isSelected()) {
             radCrop.setSelected(false);
         }
-        if(radFull.isSelected()){
+        if (radFull.isSelected()) {
             radFull.setSelected(false);
         }
         this.txtStock.setText(null);
         this.txtPrice.setText(null);
     }//GEN-LAST:event_cmdClearActionPerformed
-    
+
     /**
      * Method to close the form.
      */
-    private void closeForm(){
+    private void closeForm() {
         this.setVisible(false);
     }
+
     /**
      * @param args the command line arguments
      */

@@ -13,8 +13,9 @@ import javax.swing.JOptionPane;
  * @version 23/03/2015
  */
 public class MainGUI extends javax.swing.JFrame {
-    
+
     static CameraList list;
+
     /**
      * Creates new form MainGUI
      */
@@ -24,78 +25,99 @@ public class MainGUI extends javax.swing.JFrame {
         this.updateList();
         this.setVisible(true);
     }
-    
+
     /**
      * Method to update the lists.
      */
-    public void updateList(){
+    public void updateList() {
         System.out.println("Updating the list");
-        
+
         lstName.removeAll();
         lstMegapixles.removeAll();
         lstSensor.removeAll();
         lstStock.removeAll();
         lstPrice.removeAll();
-        
+
         String[] nameItems = new String[list.size()];
         String[] megapixlesItems = new String[list.size()];
         String[] sensorItems = new String[list.size()];
         String[] stockItems = new String[list.size()];
         String[] priceItems = new String[list.size()];
-        
-        for(int i = 0; i <= (nameItems.length - 1); i++){
+
+        for (int i = 0; i <= (nameItems.length - 1); i++) {
             nameItems[i] = list.getCamera(i).getMake() + " " + list.getCamera(i).getModel();
             megapixlesItems[i] = "" + list.getCamera(i).getMegapixles();
             sensorItems[i] = list.getCamera(i).getSensor();
             stockItems[i] = "" + list.getCamera(i).getStock();
             priceItems[i] = "£" + list.getCamera(i).getPrice();
         }
-        
+
         lstName.setListData(nameItems);
         lstMegapixles.setListData(megapixlesItems);
         lstSensor.setListData(sensorItems);
         lstStock.setListData(stockItems);
         lstPrice.setListData(priceItems);
-        
+
         System.out.println("List updated");
     }
-    
+
     /**
      * Static method to add a new camera to the list of cameras.
+     *
      * @param newCamera the new camera to be added as a Camera object.
      */
-    public static void addCamera(Camera newCamera){
+    public static void addCamera(Camera newCamera) {
         list.addCamera(newCamera);
         System.out.println("New camera added");
         ClickIt.gui.updateList();
     }
-    
+
     /**
      * Method to delete a Camera from the list using the given index.
+     *
      * @param index the index of the camera to be deleted as an int.
      */
-    public void deleteCamera(int index){
+    public void deleteCamera(int index) {
         Camera deleteCamera = list.getCamera(index);
         list.removeCamera(deleteCamera);
         list.saveToFile();
         this.updateList();
     }
-    
+
     /**
      * Method to increase the stock level of a Camera using a given index.
+     *
      * @param index the index of the Camera to have stock added as an int.
      */
-    public void increaseStock(int index){
-        int stock = Integer.parseInt(JOptionPane.showInputDialog("Enter stock to be added"));
+    public void increaseStock(int index) {
+        int stock;
+        do {
+            stock = Integer.parseInt(JOptionPane.showInputDialog("Please enter stock to be added"));
+            if (stock < 0) {
+                JOptionPane.showMessageDialog(this, "Please enter a number of 0 or greater");
+                System.out.println("Number less than 0 entered");
+            }
+        } while (stock < 0);
         list.getCamera(index).increaceStock(stock);
         list.saveToFile();
         this.updateList();
     }
-    
-    public void purchaceCamera(int index){
-        list.getCamera(index).purchase();
-        list.saveToFile();
-        this.updateList();
+
+    /**
+     * Method to purchase a Camera.
+     *
+     * @param index the index of the Camera to be purchased.
+     */
+    public void purchaseCamera(int index) {
+        boolean isPurchased = list.getCamera(index).purchase();
+        if (isPurchased) {
+            list.saveToFile();
+            this.updateList();
+            JOptionPane.showMessageDialog(this, "Camera has been purchased");
+        } else {
+            JOptionPane.showMessageDialog(this, "Camera is out of stock");
+        }
+
     }
 
     /**
@@ -111,8 +133,6 @@ public class MainGUI extends javax.swing.JFrame {
         lstMegapixles = new javax.swing.JList();
         btnAddCamera = new javax.swing.JButton();
         btnDeleteCamera = new javax.swing.JButton();
-        btnSaveCamera = new javax.swing.JButton();
-        btnOpenCamera = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstName = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -153,12 +173,6 @@ public class MainGUI extends javax.swing.JFrame {
                 btnDeleteCameraActionPerformed(evt);
             }
         });
-
-        btnSaveCamera.setText("Save");
-        btnSaveCamera.setActionCommand("saveFile");
-
-        btnOpenCamera.setText("Open");
-        btnOpenCamera.setActionCommand("openFile");
 
         lstName.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -227,34 +241,27 @@ public class MainGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAddCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDeleteCamera)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnIncreaseStock)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnPurchaseCamera))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnAddCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteCamera)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnIncreaseStock)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPurchaseCamera))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(btnSaveCamera)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnOpenCamera)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,131 +279,139 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(btnDeleteCamera)
                     .addComponent(btnIncreaseStock)
                     .addComponent(btnPurchaseCamera))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaveCamera)
-                    .addComponent(btnOpenCamera))
-                .addGap(51, 51, 51))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
-     * Method to listen for the add camera button being pressed and to add a new camera to the list.
+     * Method to listen for the add camera button being pressed and to add a new
+     * camera to the list.
+     *
      * @param evt the event of the button being pressed.
      */
     private void btnAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCameraActionPerformed
         AddCameraGUI newAddCameraGUI = new AddCameraGUI();
     }//GEN-LAST:event_btnAddCameraActionPerformed
-    
+
     /**
-     * Method to listen for the mouse being clicked within the lstName list box and highlighting the same index in all the other list boxes.
+     * Method to listen for the mouse being clicked within the lstName list box
+     * and highlighting the same index in all the other list boxes.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void lstNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstNameMouseClicked
         int index = this.lstName.getSelectedIndex();
-        
+
         this.lstMegapixles.setSelectedIndex(index);
         this.lstSensor.setSelectedIndex(index);
         this.lstStock.setSelectedIndex(index);
         this.lstPrice.setSelectedIndex(index);
     }//GEN-LAST:event_lstNameMouseClicked
-    
+
     /**
-     * Method to listen for the mouse being clicked within the lstMegapixles list box and highlighting the same index in all the other list boxes.
+     * Method to listen for the mouse being clicked within the lstMegapixles
+     * list box and highlighting the same index in all the other list boxes.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void lstMegapixlesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstMegapixlesMouseClicked
         int index = this.lstMegapixles.getSelectedIndex();
-        
+
         this.lstName.setSelectedIndex(index);
         this.lstSensor.setSelectedIndex(index);
         this.lstStock.setSelectedIndex(index);
         this.lstPrice.setSelectedIndex(index);
     }//GEN-LAST:event_lstMegapixlesMouseClicked
-    
+
     /**
-     * Method to listen for the mouse being clicked within the lstSensor list box and highlighting the same index in all the other list boxes.
+     * Method to listen for the mouse being clicked within the lstSensor list
+     * box and highlighting the same index in all the other list boxes.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void lstSensorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstSensorMouseClicked
         int index = this.lstSensor.getSelectedIndex();
-        
+
         this.lstName.setSelectedIndex(index);
         this.lstMegapixles.setSelectedIndex(index);
         this.lstStock.setSelectedIndex(index);
         this.lstPrice.setSelectedIndex(index);
     }//GEN-LAST:event_lstSensorMouseClicked
-    
+
     /**
-     * Method to listen for the mouse being clicked within the lstStock list box and highlighting the same index in all the other list boxes.
+     * Method to listen for the mouse being clicked within the lstStock list box
+     * and highlighting the same index in all the other list boxes.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void lstStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstStockMouseClicked
         int index = this.lstStock.getSelectedIndex();
-        
+
         this.lstName.setSelectedIndex(index);
         this.lstMegapixles.setSelectedIndex(index);
         this.lstSensor.setSelectedIndex(index);
         this.lstPrice.setSelectedIndex(index);
     }//GEN-LAST:event_lstStockMouseClicked
-    
+
     /**
-     * Method to listen for the mouse being clicked within the lstPrice list box and highlighting the same index in all the other list boxes.
+     * Method to listen for the mouse being clicked within the lstPrice list box
+     * and highlighting the same index in all the other list boxes.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void lstPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPriceMouseClicked
         int index = this.lstPrice.getSelectedIndex();
-        
+
         this.lstName.setSelectedIndex(index);
         this.lstMegapixles.setSelectedIndex(index);
         this.lstSensor.setSelectedIndex(index);
         this.lstStock.setSelectedIndex(index);
     }//GEN-LAST:event_lstPriceMouseClicked
-    
+
     /**
      * Method to listen for the delete button being clicked.
+     *
      * @param evt the event of the button being pressed.
      */
     private void btnDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCameraActionPerformed
         int index = this.lstName.getSelectedIndex();
-        if(index == -1){
+        if (index == -1) {
             System.out.println("No index selected");
             JOptionPane.showMessageDialog(this, "Please select a camera");
-        }
-        else{
+        } else {
             this.deleteCamera(index);
         }
     }//GEN-LAST:event_btnDeleteCameraActionPerformed
-    
+
     /**
      * Method to listen for the increase button being clicked.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void btnIncreaseStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncreaseStockActionPerformed
         int index = this.lstName.getSelectedIndex();
-        if(index == -1){
+        if (index == -1) {
             System.out.println("No index selected");
             JOptionPane.showMessageDialog(this, "Please select a camera");
-        }
-        else{
+        } else {
             this.increaseStock(index);
         }
     }//GEN-LAST:event_btnIncreaseStockActionPerformed
-    
+
     /**
      * Method to listen for the purchase button being clicked.
+     *
      * @param evt the event of the mouse being clicked.
      */
     private void btnPurchaseCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPurchaseCameraActionPerformed
         int index = this.lstName.getSelectedIndex();
-        if(index == -1){
+        if (index == -1) {
             System.out.println("No index selected");
             JOptionPane.showMessageDialog(this, "Please select a camera");
-        }
-        else{
-            this.purchaceCamera(index);
+        } else {
+            this.purchaseCamera(index);
         }
     }//GEN-LAST:event_btnPurchaseCameraActionPerformed
 
@@ -439,9 +454,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAddCamera;
     private javax.swing.JButton btnDeleteCamera;
     private javax.swing.JButton btnIncreaseStock;
-    private javax.swing.JButton btnOpenCamera;
     private javax.swing.JButton btnPurchaseCamera;
-    private javax.swing.JButton btnSaveCamera;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
