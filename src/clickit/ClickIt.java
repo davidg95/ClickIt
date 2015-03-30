@@ -12,12 +12,11 @@ package clickit;
  * @version 23/03/2015
  */
 public class ClickIt {
-
+    static MainGUI gui;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainGUI gui = new MainGUI();
+        gui = new MainGUI();
     }
-
 }

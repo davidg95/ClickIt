@@ -173,12 +173,18 @@ public class Camera {
     public void setPrice(double price) {
         this.price = price;
     }
-    
-    public String getSensor(){
-        if(full){
+
+    /**
+     * Method to return whether the sensor is full frame or crop sensor.
+     *
+     * @return returns a String value indicating whether the sensor is FULL or
+     * CROP.
+     */
+    public String getSensor() {
+        if (full) {
             return "FULL";
         }
-        
+
         return "CROP";
     }
 
@@ -191,8 +197,15 @@ public class Camera {
         System.out.println("Writing camera to file");
         return this.make + "," + this.model + "," + this.megapixles + "," + (this.full ? "FULL" : "CROP") + "," + this.stock + "," + this.price;
     }
-    
-    public String toList(){
+
+    /**
+     * Method to output details of the camera in a single line with all the data
+     * separated by a single tab space.
+     *
+     * @return returns a String value of the details of the camera in a single
+     * line.
+     */
+    public String toList() {
         return this.make + "\t" + this.model + "\t" + this.megapixles + "\t" + (this.full ? "FULL" : "CROP") + "\t" + this.stock + "\t£" + this.price;
     }
 

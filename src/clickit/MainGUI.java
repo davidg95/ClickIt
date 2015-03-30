@@ -13,19 +13,15 @@ import javax.swing.JList;
  */
 public class MainGUI extends javax.swing.JFrame {
     
-    CameraList list;
+    static CameraList list;
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
-        
         list = new CameraList();
-        
-        updateList();
-        
+        this.updateList();
         this.setVisible(true);
-        
     }
     
     /**
@@ -61,6 +57,15 @@ public class MainGUI extends javax.swing.JFrame {
         lstPrice.setListData(priceItems);
         
         System.out.println("List updated");
+    }
+    
+    /**
+     * Static method to add a new camera to the list of cameras.
+     * @param newCamera the new camera to be added as a Camera object.
+     */
+    public static void addCamera(Camera newCamera){
+        list.addCamera(newCamera);
+        ClickIt.gui.updateList();
     }
 
     /**
@@ -98,6 +103,11 @@ public class MainGUI extends javax.swing.JFrame {
 
         btnAddCamera.setText("Add Camera");
         btnAddCamera.setActionCommand("addCamera");
+        btnAddCamera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCameraActionPerformed(evt);
+            }
+        });
 
         btnDeleteCamera.setText("Delete Camera");
         btnDeleteCamera.setActionCommand("deleteCamera");
@@ -184,6 +194,14 @@ public class MainGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    /**
+     * Method to listen for the add camera button being pressed and to add a new camera to the list.
+     * @param evt the event of the button being pressed.
+     */
+    private void btnAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCameraActionPerformed
+        AddCameraGUI newAddCameraGUI = new AddCameraGUI();
+    }//GEN-LAST:event_btnAddCameraActionPerformed
 
     /**
      * @param args the command line arguments

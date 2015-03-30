@@ -19,7 +19,7 @@ import java.io.File;
  */
 public class CameraList {
 
-    private ArrayList<Camera> cameras;
+    protected ArrayList<Camera> cameras;
 
     /**
      * Constructor method for the CameraList class which creates an instance of
@@ -55,6 +55,7 @@ public class CameraList {
      */
     public void addCamera(Camera camera) {
         cameras.add(camera);
+        this.saveToFile();
     }
 
     /**
@@ -104,9 +105,10 @@ public class CameraList {
             System.out.println("Starting to write to file");
             for (int i = 0; i <= (cameras.size() - 1); i++) {
                 writer.println(cameras.get(i).writeToFile());
-                System.out.println("Writing to file complete");
+                System.out.println("Camera written to file");
             }
             writer.close();
+            System.out.println("Writing to file complete");
         } catch (IOException ex) {
 
         }
