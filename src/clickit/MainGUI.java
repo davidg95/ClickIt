@@ -8,6 +8,7 @@ package clickit;
 import javax.swing.JOptionPane;
 
 /**
+ * The main GUI for the ClickIt application.
  *
  * @author David
  * @version 23/03/2015

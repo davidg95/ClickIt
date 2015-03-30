@@ -8,6 +8,7 @@ package clickit;
 import javax.swing.JOptionPane;
 
 /**
+ * The GUI to add a new Camera to the list.
  *
  * @author 1301480
  */
