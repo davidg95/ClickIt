@@ -23,7 +23,7 @@ public class Camera {
     private double price;
 
     /**
-     * Constructor method for the Camera class which creates an instance of the
+     * Constructor method for the <code>Camera</code> class which creates an instance of the
      * camera object.
      *
      * @param make the make of the camera as a String.
@@ -186,6 +186,20 @@ public class Camera {
         }
 
         return "CROP";
+    }
+    
+    /**
+     * Method to increase the stock level of the Camera by the amount given.
+     * @param stock the amount of stock to be added to the Cameras stock level.
+     */
+    public void increaceStock(int stock){
+        this.stock += stock;
+        System.out.println("Stock of camera increace by " + stock);
+    }
+    
+    public void purchase(){
+        this.stock--;
+        System.out.println("Camera purchased");
     }
 
     /**

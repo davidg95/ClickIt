@@ -22,7 +22,7 @@ public class CameraList {
     protected ArrayList<Camera> cameras;
 
     /**
-     * Constructor method for the CameraList class which creates an instance of
+     * Constructor method for the <code>CameraList</code> class which creates an instance of
      * the CameraList object. It creates an ArrayList of type Camera and then
      * calls the method to read from the file.
      */
@@ -67,6 +67,7 @@ public class CameraList {
         for (int i = 0; i <= (cameras.size() - 1); i++) {
             if (cameras.get(i).equals(camera)) {
                 cameras.remove(i);
+                System.out.println("Camera removed from list");
             }
         }
     }
@@ -122,13 +123,18 @@ public class CameraList {
         System.out.println("Starting to open file");
         try {
             Scanner fileReader = new Scanner(file);
-
-            do {
-                cameras.add(new Camera(fileReader.nextLine()));
-            } while (fileReader.hasNextLine());
-            System.out.println("Open file complete");
+            
+            if(fileReader.hasNextLine()){
+                do {
+                    cameras.add(new Camera(fileReader.nextLine()));
+                } while (fileReader.hasNextLine());
+                System.out.println("Open file complete");
+            }
+            else{
+                System.out.println("File is empty");
+            }
         } catch (IOException e) {
-
+            System.out.println("File is empty");
         }
     }
 }
