@@ -144,8 +144,20 @@ public class MainGUI extends javax.swing.JFrame {
         lstPrice = new javax.swing.JList();
         btnIncreaseStock = new javax.swing.JButton();
         btnPurchaseCamera = new javax.swing.JButton();
+        jLabelName = new javax.swing.JLabel();
+        jLabelMegapixles = new javax.swing.JLabel();
+        JLabelSensor = new javax.swing.JLabel();
+        jLabelStock = new javax.swing.JLabel();
+        jLabelPrice = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        JMenuExit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        JMenuAddCamera = new javax.swing.JMenuItem();
+        JMenuDeleteCamera = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ClickIt");
 
         lstMegapixles.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -237,6 +249,52 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabelName.setText("Name");
+
+        jLabelMegapixles.setText("Megapixles");
+
+        JLabelSensor.setText("Sensor");
+
+        jLabelStock.setText("Stock");
+
+        jLabelPrice.setText("Price");
+
+        jMenu1.setText("File");
+
+        JMenuExit.setText("Exit");
+        JMenuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenuExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMenuExit);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+
+        JMenuAddCamera.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        JMenuAddCamera.setText("Add new camera...");
+        JMenuAddCamera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenuAddCameraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(JMenuAddCamera);
+
+        JMenuDeleteCamera.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        JMenuDeleteCamera.setText("Delete camera...");
+        JMenuDeleteCamera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenuDeleteCameraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(JMenuDeleteCamera);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -253,21 +311,38 @@ public class MainGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPurchaseCamera))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelName))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelMegapixles))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLabelSensor))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelStock))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPrice)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelName)
+                    .addComponent(jLabelMegapixles)
+                    .addComponent(JLabelSensor)
+                    .addComponent(jLabelStock)
+                    .addComponent(jLabelPrice))
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,7 +355,7 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(btnDeleteCamera)
                     .addComponent(btnIncreaseStock)
                     .addComponent(btnPurchaseCamera))
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         pack();
@@ -382,7 +457,10 @@ public class MainGUI extends javax.swing.JFrame {
             System.out.println("No index selected");
             JOptionPane.showMessageDialog(this, "Please select a camera");
         } else {
-            this.deleteCamera(index);
+            int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected camera?");
+            if (option == 0) {
+                this.deleteCamera(index);
+            }
         }
     }//GEN-LAST:event_btnDeleteCameraActionPerformed
 
@@ -415,6 +493,44 @@ public class MainGUI extends javax.swing.JFrame {
             this.purchaseCamera(index);
         }
     }//GEN-LAST:event_btnPurchaseCameraActionPerformed
+    
+    /**
+     * Method to listen for the exit option being selected in the menu bar.
+     * @param evt the event of the button being pressed.
+     */
+    private void JMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuExitActionPerformed
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?");
+
+        if (option == 0) {
+            System.out.println("Closing ClickIt application");
+            System.exit(0);
+        }
+    }//GEN-LAST:event_JMenuExitActionPerformed
+    
+    /**
+     * Method to listen for the add camera option being selected in the menu bar.
+     * @param evt the event of the button being pressed.
+     */
+    private void JMenuAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuAddCameraActionPerformed
+        AddCameraGUI newAddCameraGUI = new AddCameraGUI();
+    }//GEN-LAST:event_JMenuAddCameraActionPerformed
+    
+    /**
+     * Method to listen for the delete camera option being selected in the menu bar.
+     * @param evt the event of the button being pressed.
+     */
+    private void JMenuDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuDeleteCameraActionPerformed
+        int index = this.lstName.getSelectedIndex();
+        if (index == -1) {
+            System.out.println("No index selected");
+            JOptionPane.showMessageDialog(this, "Please select a camera");
+        } else {
+            int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected camera?");
+            if (option == 0) {
+                this.deleteCamera(index);
+            }
+        }
+    }//GEN-LAST:event_JMenuDeleteCameraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,10 +568,21 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLabelSensor;
+    private javax.swing.JMenuItem JMenuAddCamera;
+    private javax.swing.JMenuItem JMenuDeleteCamera;
+    private javax.swing.JMenuItem JMenuExit;
     private javax.swing.JButton btnAddCamera;
     private javax.swing.JButton btnDeleteCamera;
     private javax.swing.JButton btnIncreaseStock;
     private javax.swing.JButton btnPurchaseCamera;
+    private javax.swing.JLabel jLabelMegapixles;
+    private javax.swing.JLabel jLabelName;
+    private javax.swing.JLabel jLabelPrice;
+    private javax.swing.JLabel jLabelStock;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

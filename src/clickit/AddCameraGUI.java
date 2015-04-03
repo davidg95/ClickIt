@@ -57,6 +57,7 @@ public class AddCameraGUI extends javax.swing.JFrame {
         cmdClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Add New Camera");
 
         lblMake.setText("Make:");
 
