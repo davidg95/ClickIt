@@ -71,6 +71,36 @@ public class AddCameraGUI extends javax.swing.JFrame {
 
         lblPrice.setText("Price:");
 
+        txtMake.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMakeActionPerformed(evt);
+            }
+        });
+
+        txtModel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModelActionPerformed(evt);
+            }
+        });
+
+        txtMegapixles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMegapixlesActionPerformed(evt);
+            }
+        });
+
+        txtStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStockActionPerformed(evt);
+            }
+        });
+
+        txtPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPriceActionPerformed(evt);
+            }
+        });
+
         btngrpSensor.add(radCrop);
         radCrop.setText("Crop");
 
@@ -232,6 +262,26 @@ public class AddCameraGUI extends javax.swing.JFrame {
         this.txtStock.setText(null);
         this.txtPrice.setText(null);
     }//GEN-LAST:event_cmdClearActionPerformed
+
+    private void txtMakeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMakeActionPerformed
+        cmdAdd.doClick();
+    }//GEN-LAST:event_txtMakeActionPerformed
+
+    private void txtModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModelActionPerformed
+        cmdAdd.doClick();
+    }//GEN-LAST:event_txtModelActionPerformed
+
+    private void txtMegapixlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMegapixlesActionPerformed
+        cmdAdd.doClick();
+    }//GEN-LAST:event_txtMegapixlesActionPerformed
+
+    private void txtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockActionPerformed
+        cmdAdd.doClick();
+    }//GEN-LAST:event_txtStockActionPerformed
+
+    private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
+        cmdAdd.doClick();
+    }//GEN-LAST:event_txtPriceActionPerformed
 
     /**
      * Method to close the form.
