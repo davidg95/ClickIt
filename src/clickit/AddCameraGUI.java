@@ -217,17 +217,13 @@ public class AddCameraGUI extends javax.swing.JFrame {
             this.make = this.txtMake.getText();
             this.model = this.txtModel.getText();
             this.megapixles = Double.parseDouble(this.txtMegapixles.getText());
-            if (this.radFull.isSelected()) {
-                this.full = true;
-            } else {
-                this.full = false;
-            }
+            this.full = this.radFull.isSelected();
             this.stock = Integer.parseInt(this.txtStock.getText());
             this.price = Double.parseDouble(this.txtPrice.getText());
 
             Camera newCamera = new Camera(this.make, this.model, this.megapixles, this.full, this.stock, this.price);
 
-            MainGUI.addCamera(newCamera);
+            ClickIt.gui.addCamera(newCamera);
 
             this.closeForm();
         } catch (Exception e) {

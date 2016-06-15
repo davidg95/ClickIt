@@ -16,6 +16,7 @@ import java.util.Scanner;
  */
 public class Camera {
 
+    private String code;
     private String make;
     private String model;
     private double megapixles;
@@ -43,6 +44,7 @@ public class Camera {
         this.full = ifFull;
         this.stock = stock;
         this.price = price;
+        generateProductCode();
     }
 
     /**
@@ -60,17 +62,23 @@ public class Camera {
         this.model = in.next();
         this.megapixles = Double.parseDouble(in.next());
         String sensor = in.next();
-        if (sensor.equals("CROP")) {
-            this.full = false;
-        } else {
-            this.full = true;
-        }
+        this.full = !sensor.equals("CROP");
         this.stock = in.nextInt();
         this.price = in.nextDouble();
+        generateProductCode();
 
     }
 
     //Getter Methods
+    /**
+     * Gets the product code of the <code>Camera</code>.
+     *
+     * @return returns the product code of the <code>Camera</code>.
+     */
+    public String getCode() {
+        return this.code;
+    }
+
     /**
      * Gets the make of the <code>Camera</code>.
      *
@@ -143,7 +151,15 @@ public class Camera {
         return price;
     }
 
-    //Setter Methods
+    /**
+     * Sets the product code of the <code>Camera</code>.
+     *
+     * @param code the product code of the <code>Camera</code> as a String.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     /**
      * Sets the make of the <code>Camera</code>.
      *
@@ -216,18 +232,17 @@ public class Camera {
      * returns true or false to indicate whether the <code>Camera</code> has
      * been purchased.
      *
-     * @return returns true if the purchase was successful or false if
-     * unsuccessful.
+     * @throws OutOfStockException if the camera is out of stock
      */
-    public boolean purchase() {
-        if (this.stock > 0) {
-            this.stock--;
-            System.out.println("Camera purchased");
-            return true;
-        } else {
-            System.out.println("Camera not purchased, out of stock");
-            return false;
+    public void purchase() throws OutOfStockException {
+        if (this.stock == 0) {
+            throw new OutOfStockException(this.code);
         }
+        this.stock--;
+    }
+
+    private void generateProductCode() {
+        code = make.substring(0, 3) + model.substring(0, 3);
     }
 
     /**
@@ -259,7 +274,7 @@ public class Camera {
      */
     @Override
     public String toString() {
-        return "Make: " + this.make + "\nModel: " + this.model + "\nMegapixels: " + this.megapixles + "\nSensor: " + (this.full ? "FULL" : "CROP") + "\nStock: " + this.stock + "\nPrice: £" + this.price;
+        return "Product Code: " + this.code + "\nMake: " + this.make + "\nModel: " + this.model + "\nMegapixels: " + this.megapixles + "\nSensor: " + (this.full ? "FULL" : "CROP") + "\nStock: " + this.stock + "\nPrice: £" + this.price;
     }
 
 }

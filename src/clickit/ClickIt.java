@@ -13,13 +13,15 @@ package clickit;
  */
 public class ClickIt {
 
-    static MainGUI gui;
+    public static MainGUI gui;
+    public static ServerConnection sc;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         System.out.println("Starting ClickIt application");
-        gui = new MainGUI();
+        sc = new ServerConnection();
+        gui = new MainGUI(sc);
     }
 }

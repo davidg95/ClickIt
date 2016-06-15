@@ -15,12 +15,16 @@ import javax.swing.JOptionPane;
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    static CameraList list;
+    private final CameraList list;
+    private final ServerConnection sc;
 
     /**
      * Creates new form MainGUI
+     *
+     * @param sc The server connection handler class.
      */
-    public MainGUI() {
+    public MainGUI(ServerConnection sc) {
+        this.sc = sc;
         initComponents();
         list = new CameraList();
         this.updateList();
@@ -30,7 +34,7 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Method to update the lists.
      */
-    public void updateList() {
+    public final void updateList() {
         System.out.println("Updating the list");
 
         lstName.removeAll();
@@ -67,10 +71,12 @@ public class MainGUI extends javax.swing.JFrame {
      *
      * @param newCamera the new camera to be added as a Camera object.
      */
-    public static void addCamera(Camera newCamera) {
+    public void addCamera(Camera newCamera) {
         list.addCamera(newCamera);
         System.out.println("New camera added");
         ClickIt.gui.updateList();
+
+        sc.addCamera(newCamera);
     }
 
     /**
@@ -81,7 +87,7 @@ public class MainGUI extends javax.swing.JFrame {
     public void deleteCamera(int index) {
         Camera deleteCamera = list.getCamera(index);
         list.removeCamera(deleteCamera);
-        list.saveToFile();
+        //list.saveToFile();
         this.updateList();
     }
 
@@ -100,7 +106,6 @@ public class MainGUI extends javax.swing.JFrame {
             }
         } while (stock < 0);
         list.getCamera(index).increaceStock(stock);
-        list.saveToFile();
         this.updateList();
     }
 
@@ -110,13 +115,17 @@ public class MainGUI extends javax.swing.JFrame {
      * @param index the index of the Camera to be purchased.
      */
     public void purchaseCamera(int index) {
-        boolean isPurchased = list.getCamera(index).purchase();
-        if (isPurchased) {
-            list.saveToFile();
-            this.updateList();
+        String code = list.getCamera(index).getCode();
+
+        try {
+            sc.purchaceCamera(code);
             JOptionPane.showMessageDialog(this, "Camera has been purchased");
-        } else {
-            JOptionPane.showMessageDialog(this, "Camera is out of stock");
+            list.getCamera(index).setStock(sc.getStock(code));
+            this.updateList();
+        } catch (CameraNotFoundException e) {
+            JOptionPane.showMessageDialog(this, code + " has not been found");
+        } catch (OutOfStockException ex) {
+            JOptionPane.showMessageDialog(this, code + " is out of stock");
         }
 
     }
@@ -151,6 +160,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabelPrice = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuSettings = new javax.swing.JMenuItem();
         JMenuExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         JMenuAddCamera = new javax.swing.JMenuItem();
@@ -260,6 +270,14 @@ public class MainGUI extends javax.swing.JFrame {
         jLabelPrice.setText("Price");
 
         jMenu1.setText("File");
+
+        jMenuSettings.setText("Settings");
+        jMenuSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSettingsActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuSettings);
 
         JMenuExit.setText("Exit");
         JMenuExit.addActionListener(new java.awt.event.ActionListener() {
@@ -493,38 +511,44 @@ public class MainGUI extends javax.swing.JFrame {
             this.purchaseCamera(index);
         }
     }//GEN-LAST:event_btnPurchaseCameraActionPerformed
-    
+
     /**
      * Method to listen for the exit option being selected in the menu bar.
+     *
      * @param evt the event of the button being pressed.
      */
     private void JMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuExitActionPerformed
         int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?");
-        
-        for(int i = 0; i < list.size(); i++){
-            if(list.getCamera(i).getStock() == 0){
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.getCamera(i).getStock() == 0) {
                 JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " is out of stock");
-            } else if(list.getCamera(i).getStock() < 3){
+            } else if (list.getCamera(i).getStock() < 3) {
                 JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " only has " + list.getCamera(i).getStock() + " left in stock");
             }
         }
-        
+
         if (option == 0) {
             System.out.println("Closing ClickIt application");
+            sc.terminateConnection();
             System.exit(0);
         }
     }//GEN-LAST:event_JMenuExitActionPerformed
-    
+
     /**
-     * Method to listen for the add camera option being selected in the menu bar.
+     * Method to listen for the add camera option being selected in the menu
+     * bar.
+     *
      * @param evt the event of the button being pressed.
      */
     private void JMenuAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuAddCameraActionPerformed
         AddCameraGUI newAddCameraGUI = new AddCameraGUI();
     }//GEN-LAST:event_JMenuAddCameraActionPerformed
-    
+
     /**
-     * Method to listen for the delete camera option being selected in the menu bar.
+     * Method to listen for the delete camera option being selected in the menu
+     * bar.
+     *
      * @param evt the event of the button being pressed.
      */
     private void JMenuDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuDeleteCameraActionPerformed
@@ -540,40 +564,44 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMenuDeleteCameraActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jMenuSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSettingsActionPerformed
+        new Settings().setVisible(true);
+    }//GEN-LAST:event_jMenuSettingsActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainGUI().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new MainGUI().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelSensor;
@@ -591,6 +619,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuSettings;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
