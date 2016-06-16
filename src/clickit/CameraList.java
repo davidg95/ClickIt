@@ -23,6 +23,13 @@ public class CameraList {
      * and then calls the method to read from the file.
      */
     public CameraList() {
+
+    }
+
+    /**
+     * Method to get the full list of cameras from the server.
+     */
+    public void getListFromServer() {
         cameras = ClickIt.sc.getAllCameras();
     }
 
@@ -65,6 +72,22 @@ public class CameraList {
                 System.out.println("Camera removed from list");
             }
         }
+    }
+
+    /**
+     * Method to remove a camera by passing in its product code.
+     *
+     * @param code the product code of the camera.
+     * @throws CameraNotFoundException if the product code could not be found.
+     */
+    public void removeCamera(String code) throws CameraNotFoundException {
+        for (int i = 0; i < cameras.size(); i++) {
+            if (cameras.get(i).getCode().equals(code)) {
+                cameras.remove(i);
+                return;
+            }
+        }
+        throw new CameraNotFoundException(code);
     }
 
     /**

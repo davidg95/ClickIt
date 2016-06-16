@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
+ * Server connection class which handles all communication with the server.
  *
  * @author David
  */
@@ -24,31 +25,49 @@ public class ServerConnection {
     private PrintWriter out;
 
     /**
-     * Constructor which opens a new connection to the server on the specified
-     * port.
+     * Blank constructor method for server connection class.
      */
     public ServerConnection() {
-        try {
-            s = new Socket();
 
-            s.connect(new InetSocketAddress(Settings.SERVER_ADDRESS, Settings.PORT));
+    }
 
-            System.out.println("Connected to main server");
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintWriter(s.getOutputStream(), true);
+    /**
+     * Method to open a connection to a server on a specified address and port
+     * number. This will close any current connection.
+     *
+     * @param IP the address of the server to connect to.
+     * @param PORT the port number to connect on.
+     * @throws IOException if a connection could not be made.
+     */
+    public void connect(String IP, int PORT) throws IOException {
+        s = new Socket();
 
-        } catch (IOException ex) {
-            System.out.println("Error connecting to main server");
-        }
+        s.connect(new InetSocketAddress(IP, PORT), 2000);
+
+        System.out.println("Connected to main server");
+        in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        out = new PrintWriter(s.getOutputStream(), true);
     }
 
     /**
      * Method to add a new camera to the server.
      *
      * @param c the Camera object to be added.
+     * @throws clickit.CodeAlreadyExistsException if the camera code already
+     * exists.
      */
-    public void addCamera(Camera c) {
-        out.println("NEW " + c.getMake() + " " + c.getModel() + " " + c.getMegapixles() + " " + c.getSensor() + " " + c.getStock() + " " + c.getPrice());
+    public void addCamera(Camera c) throws CodeAlreadyExistsException, Exception {
+        try {
+            out.println("NEW " + c.getMake() + " " + c.getModel() + " " + c.getMegapixles() + " " + c.getSensor() + " " + c.getStock() + " " + c.getPrice());
+            String reply = in.readLine();
+            switch (reply) {
+                case "FAIL CODE":
+                    throw new CodeAlreadyExistsException(c.getCode());
+                case "FAIL":
+                    throw new Exception("ERROR COMMUNICATING WITH SERVER SERVER");
+            }
+        } catch (IOException ex) {
+        }
     }
 
     /**
@@ -58,7 +77,7 @@ public class ServerConnection {
      * @throws OutOfStockException if the camera is out of stock.
      * @throws CameraNotFoundException if the camera is not found.
      */
-    public void purchaceCamera(String code) throws OutOfStockException, CameraNotFoundException {
+    public void purchaceCamera(String code) throws OutOfStockException, CameraNotFoundException, Exception {
         out.println("PUR " + code);
         try {
             String reply = in.readLine();
@@ -67,6 +86,8 @@ public class ServerConnection {
                     throw new OutOfStockException(code);
                 case "FAIL NFOUND":
                     throw new CameraNotFoundException(code);
+                case "FAIL":
+                    throw new Exception("ERROR COMMUNICATING WITH SERVER");
             }
         } catch (IOException ex) {
         }
@@ -116,6 +137,54 @@ public class ServerConnection {
         }
 
         throw new CameraNotFoundException(code);
+    }
+
+    /**
+     * Method to increase the stock level of a camera on the server by passing
+     * in its product code.
+     *
+     * @param code the product code of the camera.
+     * @param stock the stock to be added.
+     * @throws CameraNotFoundException if the camera is not found on the server.
+     * @throws Exception if there is any errors with the server.
+     */
+    public void increaceStock(String code, int stock) throws CameraNotFoundException, Exception {
+        out.println("STOCKINC " + code + " " + stock);
+
+        try {
+            String reply = in.readLine();
+            switch (reply) {
+                case "FAIL NFOUND":
+                    throw new CameraNotFoundException(code);
+                case "FAIL":
+                    throw new Exception("ERROR COMMUNICATING WITH SERVER");
+            }
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method to delete a camera from the server by passing in its product code.
+     *
+     * @param code the product code of the camera to delete.
+     * @throws CameraNotFoundException if the camera is not found on the server.
+     * @throws Exception if there is any errors with the server.
+     */
+    public void deleteCamera(String code) throws CameraNotFoundException, Exception {
+        out.println("DEL " + code);
+
+        try {
+            String reply = in.readLine();
+            switch (reply) {
+                case "FAIL NFOUND":
+                    throw new CameraNotFoundException(code);
+                case "FAIL":
+                    throw new Exception("ERROR COMMUNICATING WITH SERVER");
+            }
+        } catch (IOException e) {
+
+        }
     }
 
     /**

@@ -5,14 +5,17 @@
  */
 package clickit;
 
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author David
  */
 public class Settings extends javax.swing.JFrame {
 
-    //public static String SERVER_ADDRESS = "192.168.1.72";
-    public static String SERVER_ADDRESS = "127.0.0.1";
+    public static String SERVER_ADDRESS = "192.168.1.72";
+    //public static String SERVER_ADDRESS = "127.0.0.1";
     public static int PORT = 500;
 
     /**
@@ -36,6 +39,8 @@ public class Settings extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         txtServer = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtPort = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,7 +58,11 @@ public class Settings extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Serer Address:");
+        jLabel1.setText("Server Address:");
+
+        jLabel2.setText("Port Number:");
+
+        txtPort.setText("500");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,14 +70,18 @@ public class Settings extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtServer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(139, 139, 139)
-                        .addComponent(btnEnter)))
+                        .addComponent(btnEnter))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtServer, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(txtPort))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(btnCancel)
                 .addContainerGap())
@@ -80,7 +93,11 @@ public class Settings extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtServer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnEnter)
@@ -95,8 +112,12 @@ public class Settings extends javax.swing.JFrame {
 
     private void btnEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterActionPerformed
         SERVER_ADDRESS = txtServer.getText();
-        ClickIt.sc.terminateConnection();
-        ClickIt.sc = new ServerConnection();
+        PORT = Integer.parseInt(txtPort.getText());
+        try {
+            ClickIt.sc.connect(SERVER_ADDRESS, PORT);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error connecting to server");
+        }
         this.dispose();
     }//GEN-LAST:event_btnEnterActionPerformed
 
@@ -143,6 +164,8 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JToggleButton btnEnter;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField txtPort;
     private javax.swing.JTextField txtServer;
     // End of variables declaration//GEN-END:variables
 }

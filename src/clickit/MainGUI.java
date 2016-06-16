@@ -5,6 +5,7 @@
  */
 package clickit;
 
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,10 +26,16 @@ public class MainGUI extends javax.swing.JFrame {
      */
     public MainGUI(ServerConnection sc) {
         this.sc = sc;
-        initComponents();
         list = new CameraList();
-        this.updateList();
+        initComponents();
         this.setVisible(true);
+        try {
+            this.sc.connect(Settings.SERVER_ADDRESS, Settings.PORT);
+            list.getListFromServer();
+            this.updateList();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error connecting to server");
+        }
     }
 
     /**
@@ -72,11 +79,16 @@ public class MainGUI extends javax.swing.JFrame {
      * @param newCamera the new camera to be added as a Camera object.
      */
     public void addCamera(Camera newCamera) {
-        list.addCamera(newCamera);
-        System.out.println("New camera added");
-        ClickIt.gui.updateList();
-
-        sc.addCamera(newCamera);
+        try {
+            sc.addCamera(newCamera);
+            list.addCamera(newCamera);
+            System.out.println("New camera added");
+            this.updateList();
+        } catch (CodeAlreadyExistsException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     /**
@@ -85,10 +97,18 @@ public class MainGUI extends javax.swing.JFrame {
      * @param index the index of the camera to be deleted as an int.
      */
     public void deleteCamera(int index) {
-        Camera deleteCamera = list.getCamera(index);
-        list.removeCamera(deleteCamera);
-        //list.saveToFile();
-        this.updateList();
+        String code = list.getCamera(index).getCode();
+
+        try {
+            sc.deleteCamera(code);
+            list.removeCamera(code);
+            System.out.println("Camera " + code + " deleted");
+            this.updateList();
+        } catch (CameraNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
+        } catch (Exception ex) {
+
+        }
     }
 
     /**
@@ -97,7 +117,9 @@ public class MainGUI extends javax.swing.JFrame {
      * @param index the index of the Camera to have stock added as an int.
      */
     public void increaseStock(int index) {
+        String code = list.getCamera(index).getCode();
         int stock;
+
         do {
             stock = Integer.parseInt(JOptionPane.showInputDialog("Please enter stock to be added"));
             if (stock < 0) {
@@ -105,8 +127,16 @@ public class MainGUI extends javax.swing.JFrame {
                 System.out.println("Number less than 0 entered");
             }
         } while (stock < 0);
-        list.getCamera(index).increaceStock(stock);
-        this.updateList();
+
+        try {
+            sc.increaceStock(code, stock);
+            list.getCamera(index).increaceStock(stock);
+            this.updateList();
+        } catch (CameraNotFoundException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     /**
@@ -126,6 +156,8 @@ public class MainGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, code + " has not been found");
         } catch (OutOfStockException ex) {
             JOptionPane.showMessageDialog(this, code + " is out of stock");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
     }

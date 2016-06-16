@@ -11,20 +11,20 @@ package clickit;
  * @author David
  */
 public class CameraNotFoundException extends Exception {
-    
+
     private final String code;
-    
-    public CameraNotFoundException(String code){
+
+    public CameraNotFoundException(String code) {
         this.code = code;
     }
-    
+
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return code + " not found";
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Exception: " + code + " not found";
     }
 }
