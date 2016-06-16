@@ -552,15 +552,14 @@ public class MainGUI extends javax.swing.JFrame {
     private void JMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuExitActionPerformed
         int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?");
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.getCamera(i).getStock() == 0) {
-                JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " is out of stock");
-            } else if (list.getCamera(i).getStock() < 3) {
-                JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " only has " + list.getCamera(i).getStock() + " left in stock");
-            }
-        }
-
         if (option == 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.getCamera(i).getStock() == 0) {
+                    JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " is out of stock");
+                } else if (list.getCamera(i).getStock() < 3) {
+                    JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " only has " + list.getCamera(i).getStock() + " left in stock");
+                }
+            }
             System.out.println("Closing ClickIt application");
             sc.terminateConnection();
             System.exit(0);
