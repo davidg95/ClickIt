@@ -115,6 +115,8 @@ public class Settings extends javax.swing.JFrame {
         PORT = Integer.parseInt(txtPort.getText());
         try {
             ClickIt.sc.connect(SERVER_ADDRESS, PORT);
+            ClickIt.gui.list.getListFromServer();
+            ClickIt.gui.updateList();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error connecting to server");
         }

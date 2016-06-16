@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    private final CameraList list;
+    protected final CameraList list;
     private final ServerConnection sc;
 
     /**
