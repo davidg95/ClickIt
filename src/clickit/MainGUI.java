@@ -191,6 +191,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabelPrice = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuUpdateListings = new javax.swing.JMenuItem();
         jMenuSettings = new javax.swing.JMenuItem();
         JMenuExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -304,6 +305,16 @@ public class MainGUI extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
+        jMenuUpdateListings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuUpdateListings.setText("Update Listings");
+        jMenuUpdateListings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUpdateListingsActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuUpdateListings);
+
+        jMenuSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuSettings.setText("Settings");
         jMenuSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -726,6 +737,11 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuPurchaseCameraActionPerformed
 
+    private void jMenuUpdateListingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUpdateListingsActionPerformed
+        list.getListFromServer();
+        this.updateList();
+    }//GEN-LAST:event_jMenuUpdateListingsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelSensor;
     private javax.swing.JMenuItem JMenuAddCamera;
@@ -745,6 +761,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuIncreaseStock;
     private javax.swing.JMenuItem jMenuPurchaseCamera;
     private javax.swing.JMenuItem jMenuSettings;
+    private javax.swing.JMenuItem jMenuUpdateListings;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

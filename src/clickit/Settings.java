@@ -24,6 +24,7 @@ public class Settings extends javax.swing.JFrame {
      */
     public Settings() {
         initComponents();
+        txtServer.setText(SERVER_ADDRESS);
     }
 
     /**
