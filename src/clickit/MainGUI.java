@@ -159,7 +159,6 @@ public class MainGUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
     }
 
     /**
@@ -197,6 +196,8 @@ public class MainGUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         JMenuAddCamera = new javax.swing.JMenuItem();
         JMenuDeleteCamera = new javax.swing.JMenuItem();
+        jMenuIncreaseStock = new javax.swing.JMenuItem();
+        jMenuPurchaseCamera = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickIt");
@@ -340,6 +341,24 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
         jMenu2.add(JMenuDeleteCamera);
+
+        jMenuIncreaseStock.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuIncreaseStock.setText("Increase Stock");
+        jMenuIncreaseStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuIncreaseStockActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuIncreaseStock);
+
+        jMenuPurchaseCamera.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuPurchaseCamera.setText("Purhcase Camera");
+        jMenuPurchaseCamera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPurchaseCameraActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuPurchaseCamera);
 
         jMenuBar1.add(jMenu2);
 
@@ -504,8 +523,16 @@ public class MainGUI extends javax.swing.JFrame {
     private void btnDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCameraActionPerformed
         int index = this.lstName.getSelectedIndex();
         if (index == -1) {
-            System.out.println("No index selected");
-            JOptionPane.showMessageDialog(this, "Please select a camera");
+            String code = JOptionPane.showInputDialog("Enter product code to delete");
+            try {
+                sc.deleteCamera(code);
+                list.removeCamera(code);
+                System.out.println("Camera " + code + " deleted");
+                this.updateList();
+            } catch (CameraNotFoundException e) {
+                JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
+            } catch (Exception ex) {
+            }
         } else {
             int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected camera?");
             if (option == 0) {
@@ -522,8 +549,25 @@ public class MainGUI extends javax.swing.JFrame {
     private void btnIncreaseStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncreaseStockActionPerformed
         int index = this.lstName.getSelectedIndex();
         if (index == -1) {
-            System.out.println("No index selected");
-            JOptionPane.showMessageDialog(this, "Please select a camera");
+            String code = JOptionPane.showInputDialog("Enter product code");
+            int stock;
+            do {
+                stock = Integer.parseInt(JOptionPane.showInputDialog("Please enter stock to be added"));
+                if (stock < 0) {
+                    JOptionPane.showMessageDialog(this, "Please enter a number of 0 or greater");
+                    System.out.println("Number less than 0 entered");
+                }
+            } while (stock < 0);
+
+            try {
+                sc.increaceStock(code, stock);
+                list.getCamera(code).increaceStock(stock);
+                this.updateList();
+            } catch (CameraNotFoundException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         } else {
             this.increaseStock(index);
         }
@@ -537,8 +581,19 @@ public class MainGUI extends javax.swing.JFrame {
     private void btnPurchaseCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPurchaseCameraActionPerformed
         int index = this.lstName.getSelectedIndex();
         if (index == -1) {
-            System.out.println("No index selected");
-            JOptionPane.showMessageDialog(this, "Please select a camera");
+            String code = JOptionPane.showInputDialog("Enter product code");
+            try {
+                sc.purchaceCamera(code);
+                JOptionPane.showMessageDialog(this, "Camera has been purchased");
+                list.getCamera(code).setStock(sc.getStock(code));
+                this.updateList();
+            } catch (CameraNotFoundException e) {
+                JOptionPane.showMessageDialog(this, code + " has not been found");
+            } catch (OutOfStockException ex) {
+                JOptionPane.showMessageDialog(this, code + " is out of stock");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         } else {
             this.purchaseCamera(index);
         }
@@ -585,8 +640,16 @@ public class MainGUI extends javax.swing.JFrame {
     private void JMenuDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuDeleteCameraActionPerformed
         int index = this.lstName.getSelectedIndex();
         if (index == -1) {
-            System.out.println("No index selected");
-            JOptionPane.showMessageDialog(this, "Please select a camera");
+            String code = JOptionPane.showInputDialog("Enter product code to delete");
+            try {
+                sc.deleteCamera(code);
+                list.removeCamera(code);
+                System.out.println("Camera " + code + " deleted");
+                this.updateList();
+            } catch (CameraNotFoundException e) {
+                JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
+            } catch (Exception ex) {
+            }
         } else {
             int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected camera?");
             if (option == 0) {
@@ -595,44 +658,73 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMenuDeleteCameraActionPerformed
 
+    /**
+     * Displays the settings window if the settings button is pressed.
+     *
+     * @param evt
+     */
     private void jMenuSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSettingsActionPerformed
         new Settings().setVisible(true);
     }//GEN-LAST:event_jMenuSettingsActionPerformed
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(MainGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new MainGUI().setVisible(true);
-//            }
-//        });
-//    }
+    /**
+     * Increases the stock level of a specified camera or a camera selected in
+     * the list.
+     *
+     * @param evt
+     */
+    private void jMenuIncreaseStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIncreaseStockActionPerformed
+        int index = this.lstName.getSelectedIndex();
+        if (index == -1) {
+            String code = JOptionPane.showInputDialog("Enter product code");
+            int stock;
+            do {
+                stock = Integer.parseInt(JOptionPane.showInputDialog("Please enter stock to be added"));
+                if (stock < 0) {
+                    JOptionPane.showMessageDialog(this, "Please enter a number of 0 or greater");
+                    System.out.println("Number less than 0 entered");
+                }
+            } while (stock < 0);
+
+            try {
+                sc.increaceStock(code, stock);
+                list.getCamera(code).increaceStock(stock);
+                this.updateList();
+            } catch (CameraNotFoundException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        } else {
+            this.increaseStock(index);
+        }
+    }//GEN-LAST:event_jMenuIncreaseStockActionPerformed
+
+    /**
+     * Purchases a specified camera or a camera selected in the list
+     *
+     * @param evt
+     */
+    private void jMenuPurchaseCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPurchaseCameraActionPerformed
+        int index = this.lstName.getSelectedIndex();
+        if (index == -1) {
+            String code = JOptionPane.showInputDialog("Enter product code");
+            try {
+                sc.purchaceCamera(code);
+                JOptionPane.showMessageDialog(this, "Camera has been purchased");
+                list.getCamera(code).setStock(sc.getStock(code));
+                this.updateList();
+            } catch (CameraNotFoundException e) {
+                JOptionPane.showMessageDialog(this, code + " has not been found");
+            } catch (OutOfStockException ex) {
+                JOptionPane.showMessageDialog(this, code + " is out of stock");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        } else {
+            this.purchaseCamera(index);
+        }
+    }//GEN-LAST:event_jMenuPurchaseCameraActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelSensor;
@@ -650,6 +742,8 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuIncreaseStock;
+    private javax.swing.JMenuItem jMenuPurchaseCamera;
     private javax.swing.JMenuItem jMenuSettings;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

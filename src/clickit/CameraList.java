@@ -117,4 +117,20 @@ public class CameraList {
     public Camera getCamera(int i) {
         return cameras.get(i);
     }
+
+    /**
+     * Method to return a camera object by its product code.
+     *
+     * @param code the product code to search for.
+     * @return returns a Camera object.
+     * @throws CameraNotFoundException if the code could not be found.
+     */
+    public Camera getCamera(String code) throws CameraNotFoundException {
+        for (Camera c : cameras) {
+            if (c.getCode().equals(code)) {
+                return c;
+            }
+        }
+        throw new CameraNotFoundException(code);
+    }
 }
