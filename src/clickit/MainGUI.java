@@ -29,6 +29,23 @@ public class MainGUI extends javax.swing.JFrame {
         list = new CameraList();
         initComponents();
         this.setVisible(true);
+        connectToServer(sc);
+    }
+
+    /**
+     * Method to update the list boxes with the latest server data.
+     */
+    public void updateListings() {
+        list.getListFromServer();
+        this.updateList();
+    }
+
+    /**
+     * Method to make a connection to the server.
+     *
+     * @param sc the ServerConnection object.
+     */
+    public final void connectToServer(ServerConnection sc) {
         try {
             this.sc.connect(Settings.SERVER_ADDRESS, Settings.PORT);
             list.getListFromServer();
@@ -83,7 +100,7 @@ public class MainGUI extends javax.swing.JFrame {
             sc.addCamera(newCamera);
             list.addCamera(newCamera);
             System.out.println("New camera added");
-            this.updateList();
+            updateListings();
         } catch (CodeAlreadyExistsException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         } catch (Exception ex) {
@@ -103,7 +120,7 @@ public class MainGUI extends javax.swing.JFrame {
             sc.deleteCamera(code);
             list.removeCamera(code);
             System.out.println("Camera " + code + " deleted");
-            this.updateList();
+            updateListings();
         } catch (CameraNotFoundException e) {
             JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
         } catch (Exception ex) {
@@ -131,7 +148,7 @@ public class MainGUI extends javax.swing.JFrame {
         try {
             sc.increaceStock(code, stock);
             list.getCamera(index).increaceStock(stock);
-            this.updateList();
+            updateListings();
         } catch (CameraNotFoundException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ex) {
@@ -151,7 +168,7 @@ public class MainGUI extends javax.swing.JFrame {
             sc.purchaceCamera(code);
             JOptionPane.showMessageDialog(this, "Camera has been purchased");
             list.getCamera(index).setStock(sc.getStock(code));
-            this.updateList();
+            updateListings();
         } catch (CameraNotFoundException e) {
             JOptionPane.showMessageDialog(this, code + " has not been found");
         } catch (OutOfStockException ex) {
@@ -539,7 +556,7 @@ public class MainGUI extends javax.swing.JFrame {
                 sc.deleteCamera(code);
                 list.removeCamera(code);
                 System.out.println("Camera " + code + " deleted");
-                this.updateList();
+                updateListings();
             } catch (CameraNotFoundException e) {
                 JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
             } catch (Exception ex) {
@@ -573,7 +590,7 @@ public class MainGUI extends javax.swing.JFrame {
             try {
                 sc.increaceStock(code, stock);
                 list.getCamera(code).increaceStock(stock);
-                this.updateList();
+                updateListings();
             } catch (CameraNotFoundException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             } catch (Exception ex) {
@@ -597,7 +614,7 @@ public class MainGUI extends javax.swing.JFrame {
                 sc.purchaceCamera(code);
                 JOptionPane.showMessageDialog(this, "Camera has been purchased");
                 list.getCamera(code).setStock(sc.getStock(code));
-                this.updateList();
+                updateListings();
             } catch (CameraNotFoundException e) {
                 JOptionPane.showMessageDialog(this, code + " has not been found");
             } catch (OutOfStockException ex) {
@@ -616,7 +633,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void JMenuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuExitActionPerformed
-        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?");
+        int option = JOptionPane.showOptionDialog(this, "Are you sure you want to close the application?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
         if (option == 0) {
             for (int i = 0; i < list.size(); i++) {
@@ -656,7 +673,7 @@ public class MainGUI extends javax.swing.JFrame {
                 sc.deleteCamera(code);
                 list.removeCamera(code);
                 System.out.println("Camera " + code + " deleted");
-                this.updateList();
+                updateListings();
             } catch (CameraNotFoundException e) {
                 JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
             } catch (Exception ex) {
@@ -700,7 +717,7 @@ public class MainGUI extends javax.swing.JFrame {
             try {
                 sc.increaceStock(code, stock);
                 list.getCamera(code).increaceStock(stock);
-                this.updateList();
+                updateListings();
             } catch (CameraNotFoundException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             } catch (Exception ex) {
@@ -724,7 +741,7 @@ public class MainGUI extends javax.swing.JFrame {
                 sc.purchaceCamera(code);
                 JOptionPane.showMessageDialog(this, "Camera has been purchased");
                 list.getCamera(code).setStock(sc.getStock(code));
-                this.updateList();
+                updateListings();
             } catch (CameraNotFoundException e) {
                 JOptionPane.showMessageDialog(this, code + " has not been found");
             } catch (OutOfStockException ex) {
