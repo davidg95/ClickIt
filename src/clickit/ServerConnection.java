@@ -58,7 +58,7 @@ public class ServerConnection {
      */
     public void addCamera(Camera c) throws CodeAlreadyExistsException, Exception {
         try {
-            out.println("NEW " + c.getMake() + " " + c.getModel() + " " + c.getMegapixles() + " " + c.getSensor() + " " + c.getStock() + " " + c.getPrice());
+            out.println("NEW," + c.getMake() + "," + c.getModel() + "," + c.getMegapixles() + "," + c.getSensor() + "," + c.getStock() + "," + c.getPrice());
             String reply = in.readLine();
             switch (reply) {
                 case "FAIL CODE":
@@ -78,7 +78,7 @@ public class ServerConnection {
      * @throws CameraNotFoundException if the camera is not found.
      */
     public void purchaceCamera(String code) throws OutOfStockException, CameraNotFoundException, Exception {
-        out.println("PUR " + code);
+        out.println("PUR," + code);
         try {
             String reply = in.readLine();
             switch (reply) {
@@ -101,7 +101,7 @@ public class ServerConnection {
      * @throws CameraNotFoundException if not camera is found.
      */
     public Camera getCamera(String code) throws CameraNotFoundException {
-        out.println("GET " + code);
+        out.println("GET," + code);
 
         try {
             String reply = in.readLine();
@@ -124,7 +124,7 @@ public class ServerConnection {
      * @throws CameraNotFoundException if the camera was not found.
      */
     public int getStock(String code) throws CameraNotFoundException {
-        out.println("GETSTOCK " + code);
+        out.println("GETSTOCK," + code);
 
         try {
             String reply = in.readLine();
@@ -149,7 +149,7 @@ public class ServerConnection {
      * @throws Exception if there is any errors with the server.
      */
     public void increaceStock(String code, int stock) throws CameraNotFoundException, Exception {
-        out.println("STOCKINC " + code + " " + stock);
+        out.println("STOCKINC," + code + "," + stock);
 
         try {
             String reply = in.readLine();
@@ -172,7 +172,7 @@ public class ServerConnection {
      * @throws Exception if there is any errors with the server.
      */
     public void deleteCamera(String code) throws CameraNotFoundException, Exception {
-        out.println("DEL " + code);
+        out.println("DEL," + code);
 
         try {
             String reply = in.readLine();
@@ -201,7 +201,7 @@ public class ServerConnection {
             if (!reply.equals("FAIL")) {
                 int size = Integer.parseInt(reply);
                 for (int i = 0; i < size; i++) {
-                    out.println("GETINDEX " + i);
+                    out.println("GETINDEX," + i);
                     cameras.add(new Camera(in.readLine()));
                 }
             }
@@ -212,13 +212,12 @@ public class ServerConnection {
 
     /**
      * Method to terminate the connection to the server.
+     *
+     * @throws java.io.IOException if there was an error closing the connection.
      */
-    public void terminateConnection() {
+    public void terminateConnection() throws IOException {
         out.println("CONNTERM");
-        try {
-            System.out.println("Closing connection to the server");
-            s.close();
-        } catch (IOException ex) {
-        }
+        System.out.println("Closing connection to the server");
+        s.close();
     }
 }

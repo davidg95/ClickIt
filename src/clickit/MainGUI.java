@@ -636,16 +636,22 @@ public class MainGUI extends javax.swing.JFrame {
         int option = JOptionPane.showOptionDialog(this, "Are you sure you want to close the application?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
         if (option == 0) {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.getCamera(i).getStock() == 0) {
-                    JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " is out of stock");
-                } else if (list.getCamera(i).getStock() < 3) {
-                    JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " only has " + list.getCamera(i).getStock() + " left in stock");
+            try {
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.getCamera(i).getStock() == 0) {
+                        JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " is out of stock");
+                    } else if (list.getCamera(i).getStock() < 3) {
+                        JOptionPane.showMessageDialog(this, list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + " only has " + list.getCamera(i).getStock() + " left in stock");
+                    }
                 }
+                System.out.println("Closing ClickIt application");
+
+                sc.terminateConnection();
+            } catch (IOException | NullPointerException ex) {
+                
+            } finally {
+                System.exit(0);
             }
-            System.out.println("Closing ClickIt application");
-            sc.terminateConnection();
-            System.exit(0);
         }
     }//GEN-LAST:event_JMenuExitActionPerformed
 
