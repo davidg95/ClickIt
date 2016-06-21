@@ -25,6 +25,7 @@ public class Settings extends javax.swing.JFrame {
     public Settings() {
         initComponents();
         txtServer.setText(SERVER_ADDRESS);
+        txtPort.setText(Integer.toString(PORT));
     }
 
     /**
@@ -44,6 +45,7 @@ public class Settings extends javax.swing.JFrame {
         txtPort = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Settings");
 
         btnEnter.setText("Save Changes");
         btnEnter.addActionListener(new java.awt.event.ActionListener() {
@@ -59,11 +61,21 @@ public class Settings extends javax.swing.JFrame {
             }
         });
 
+        txtServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtServerActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Server Address:");
 
         jLabel2.setText("Port Number:");
 
-        txtPort.setText("500");
+        txtPort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPortActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,6 +139,14 @@ public class Settings extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerActionPerformed
+        btnEnter.doClick();
+    }//GEN-LAST:event_txtServerActionPerformed
+
+    private void txtPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPortActionPerformed
+        btnEnter.doClick();
+    }//GEN-LAST:event_txtPortActionPerformed
 
 //    /**
 //     * @param args the command line arguments

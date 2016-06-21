@@ -66,8 +66,8 @@ public class MainGUI extends javax.swing.JFrame {
         String[] cameraItems = new String[list.size()];
 
         for (int i = 0; i <= (cameraItems.length - 1); i++) {
-            cameraItems[i] = "<html><pre>" + list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + ((list.getCamera(i).getMake() + " " + list.getCamera(i).getModel()).length() < 15 ? "\t\t" : "\t") + list.getCamera(i).getMegapixles() + "\t" + list.getCamera(i).getSensor() + "\t\t" + list.getCamera(i).getStock() + "\t" + list.getCamera(i).getPrice() + "</pre></html>";
-            System.out.println("" + list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + ((list.getCamera(i).getMake() + " " + list.getCamera(i).getModel()).length() < 15 ? "\t\t" : "\t") + list.getCamera(i).getMegapixles() + "\t" + list.getCamera(i).getSensor() + "\t" + list.getCamera(i).getStock() + "\t" + list.getCamera(i).getPrice());
+            cameraItems[i] = "<html><pre>" + list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + ((list.getCamera(i).getMake() + " " + list.getCamera(i).getModel()).length() < 17 ? "\t\t" : "\t") + list.getCamera(i).getMegapixles() + "\t" + list.getCamera(i).getSensor() + "\t\t" + list.getCamera(i).getStock() + "\t" + list.getCamera(i).getPrice() + "</pre></html>";
+            System.out.println("" + list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + ((list.getCamera(i).getMake() + " " + list.getCamera(i).getModel()).length() < 17 ? "\t\t" : "\t") + list.getCamera(i).getMegapixles() + "\t" + list.getCamera(i).getSensor() + "\t" + list.getCamera(i).getStock() + "\t" + list.getCamera(i).getPrice());
         }
 
         lstItems.setListData(cameraItems);
@@ -391,12 +391,9 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the mouse being clicked.
      */
     private void lstItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstItemsMouseClicked
-//        int index = this.lstName.getSelectedIndex();
-//
-//        this.lstMegapixles.setSelectedIndex(index);
-//        this.lstSensor.setSelectedIndex(index);
-//        this.lstStock.setSelectedIndex(index);
-//        this.lstPrice.setSelectedIndex(index);
+        if(evt.getClickCount() == 2){
+            new CameraDetails(list.getCamera(lstItems.getSelectedIndex()), lstItems.getSelectedIndex()).setVisible(true);
+        }
     }//GEN-LAST:event_lstItemsMouseClicked
 
     /**
