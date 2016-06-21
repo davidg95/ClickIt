@@ -408,14 +408,16 @@ public class MainGUI extends javax.swing.JFrame {
         int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code to delete");
-            try {
-                sc.deleteCamera(code);
-                list.removeCamera(code);
-                System.out.println("Camera " + code + " deleted");
-                updateListings();
-            } catch (CameraNotFoundException e) {
-                JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
-            } catch (Exception ex) {
+            if (!code.equals("")) {
+                try {
+                    sc.deleteCamera(code);
+                    list.removeCamera(code);
+                    System.out.println("Camera " + code + " deleted");
+                    updateListings();
+                } catch (CameraNotFoundException e) {
+                    JOptionPane.showMessageDialog(this, "Camera " + code + " not found");
+                } catch (Exception ex) {
+                }
             }
         } else {
             int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected camera?");
@@ -466,17 +468,19 @@ public class MainGUI extends javax.swing.JFrame {
         int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code");
-            try {
-                sc.purchaceCamera(code);
-                JOptionPane.showMessageDialog(this, "Camera has been purchased");
-                list.getCamera(code).setStock(sc.getStock(code));
-                updateListings();
-            } catch (CameraNotFoundException e) {
-                JOptionPane.showMessageDialog(this, code + " has not been found");
-            } catch (OutOfStockException ex) {
-                JOptionPane.showMessageDialog(this, code + " is out of stock");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+            if (!code.equals("")) {
+                try {
+                    sc.purchaceCamera(code);
+                    JOptionPane.showMessageDialog(this, "Camera has been purchased");
+                    list.getCamera(code).setStock(sc.getStock(code));
+                    updateListings();
+                } catch (CameraNotFoundException e) {
+                    JOptionPane.showMessageDialog(this, code + " has not been found");
+                } catch (OutOfStockException ex) {
+                    JOptionPane.showMessageDialog(this, code + " is out of stock");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
             }
         } else {
             this.purchaseCamera(index);
