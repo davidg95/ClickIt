@@ -56,36 +56,21 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method to update the lists.
+     * Method to update the list.
      */
     public final void updateList() {
         System.out.println("Updating the list");
 
-        lstName.removeAll();
-        lstMegapixles.removeAll();
-        lstSensor.removeAll();
-        lstStock.removeAll();
-        lstPrice.removeAll();
+        lstItems.removeAll();
 
-        String[] nameItems = new String[list.size()];
-        String[] megapixlesItems = new String[list.size()];
-        String[] sensorItems = new String[list.size()];
-        String[] stockItems = new String[list.size()];
-        String[] priceItems = new String[list.size()];
+        String[] cameraItems = new String[list.size()];
 
-        for (int i = 0; i <= (nameItems.length - 1); i++) {
-            nameItems[i] = list.getCamera(i).getMake() + " " + list.getCamera(i).getModel();
-            megapixlesItems[i] = "" + list.getCamera(i).getMegapixles();
-            sensorItems[i] = list.getCamera(i).getSensor();
-            stockItems[i] = "" + list.getCamera(i).getStock();
-            priceItems[i] = "£" + list.getCamera(i).getPrice();
+        for (int i = 0; i <= (cameraItems.length - 1); i++) {
+            cameraItems[i] = "<html><pre>" + list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + ((list.getCamera(i).getMake() + " " + list.getCamera(i).getModel()).length() < 15 ? "\t\t" : "\t") + list.getCamera(i).getMegapixles() + "\t" + list.getCamera(i).getSensor() + "\t\t" + list.getCamera(i).getStock() + "\t" + list.getCamera(i).getPrice() + "</pre></html>";
+            System.out.println("" + list.getCamera(i).getMake() + " " + list.getCamera(i).getModel() + ((list.getCamera(i).getMake() + " " + list.getCamera(i).getModel()).length() < 15 ? "\t\t" : "\t") + list.getCamera(i).getMegapixles() + "\t" + list.getCamera(i).getSensor() + "\t" + list.getCamera(i).getStock() + "\t" + list.getCamera(i).getPrice());
         }
 
-        lstName.setListData(nameItems);
-        lstMegapixles.setListData(megapixlesItems);
-        lstSensor.setListData(sensorItems);
-        lstStock.setListData(stockItems);
-        lstPrice.setListData(priceItems);
+        lstItems.setListData(cameraItems);
 
         System.out.println("List updated");
     }
@@ -187,18 +172,10 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstMegapixles = new javax.swing.JList();
         btnAddCamera = new javax.swing.JButton();
         btnDeleteCamera = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lstName = new javax.swing.JList();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        lstSensor = new javax.swing.JList();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        lstStock = new javax.swing.JList();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        lstPrice = new javax.swing.JList();
+        lstItems = new javax.swing.JList();
         btnIncreaseStock = new javax.swing.JButton();
         btnPurchaseCamera = new javax.swing.JButton();
         jLabelName = new javax.swing.JLabel();
@@ -220,18 +197,6 @@ public class MainGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClickIt");
 
-        lstMegapixles.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        lstMegapixles.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstMegapixlesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(lstMegapixles);
-
         btnAddCamera.setText("Add Camera");
         btnAddCamera.setActionCommand("addCamera");
         btnAddCamera.addActionListener(new java.awt.event.ActionListener() {
@@ -248,53 +213,17 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        lstName.setModel(new javax.swing.AbstractListModel() {
+        lstItems.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        lstName.addMouseListener(new java.awt.event.MouseAdapter() {
+        lstItems.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstNameMouseClicked(evt);
+                lstItemsMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(lstName);
-
-        lstSensor.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        lstSensor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstSensorMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(lstSensor);
-
-        lstStock.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        lstStock.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstStockMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(lstStock);
-
-        lstPrice.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        lstPrice.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lstPriceMouseClicked(evt);
-            }
-        });
-        jScrollPane5.setViewportView(lstPrice);
+        jScrollPane2.setViewportView(lstItems);
 
         btnIncreaseStock.setText("Increase Stock");
         btnIncreaseStock.addActionListener(new java.awt.event.ActionListener() {
@@ -408,25 +337,17 @@ public class MainGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPurchaseCamera))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelName))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelMegapixles))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLabelSensor))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelStock))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelPrice)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabelName)
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabelMegapixles)
+                        .addGap(45, 45, 45)
+                        .addComponent(JLabelSensor)
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabelStock)
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabelPrice)
+                        .addGap(57, 57, 57))
+                    .addComponent(jScrollPane2))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -440,12 +361,7 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(jLabelStock)
                     .addComponent(jLabelPrice))
                 .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCamera)
@@ -474,74 +390,14 @@ public class MainGUI extends javax.swing.JFrame {
      *
      * @param evt the event of the mouse being clicked.
      */
-    private void lstNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstNameMouseClicked
-        int index = this.lstName.getSelectedIndex();
-
-        this.lstMegapixles.setSelectedIndex(index);
-        this.lstSensor.setSelectedIndex(index);
-        this.lstStock.setSelectedIndex(index);
-        this.lstPrice.setSelectedIndex(index);
-    }//GEN-LAST:event_lstNameMouseClicked
-
-    /**
-     * Method to listen for the mouse being clicked within the lstMegapixles
-     * list box and highlighting the same index in all the other list boxes.
-     *
-     * @param evt the event of the mouse being clicked.
-     */
-    private void lstMegapixlesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstMegapixlesMouseClicked
-        int index = this.lstMegapixles.getSelectedIndex();
-
-        this.lstName.setSelectedIndex(index);
-        this.lstSensor.setSelectedIndex(index);
-        this.lstStock.setSelectedIndex(index);
-        this.lstPrice.setSelectedIndex(index);
-    }//GEN-LAST:event_lstMegapixlesMouseClicked
-
-    /**
-     * Method to listen for the mouse being clicked within the lstSensor list
-     * box and highlighting the same index in all the other list boxes.
-     *
-     * @param evt the event of the mouse being clicked.
-     */
-    private void lstSensorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstSensorMouseClicked
-        int index = this.lstSensor.getSelectedIndex();
-
-        this.lstName.setSelectedIndex(index);
-        this.lstMegapixles.setSelectedIndex(index);
-        this.lstStock.setSelectedIndex(index);
-        this.lstPrice.setSelectedIndex(index);
-    }//GEN-LAST:event_lstSensorMouseClicked
-
-    /**
-     * Method to listen for the mouse being clicked within the lstStock list box
-     * and highlighting the same index in all the other list boxes.
-     *
-     * @param evt the event of the mouse being clicked.
-     */
-    private void lstStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstStockMouseClicked
-        int index = this.lstStock.getSelectedIndex();
-
-        this.lstName.setSelectedIndex(index);
-        this.lstMegapixles.setSelectedIndex(index);
-        this.lstSensor.setSelectedIndex(index);
-        this.lstPrice.setSelectedIndex(index);
-    }//GEN-LAST:event_lstStockMouseClicked
-
-    /**
-     * Method to listen for the mouse being clicked within the lstPrice list box
-     * and highlighting the same index in all the other list boxes.
-     *
-     * @param evt the event of the mouse being clicked.
-     */
-    private void lstPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPriceMouseClicked
-        int index = this.lstPrice.getSelectedIndex();
-
-        this.lstName.setSelectedIndex(index);
-        this.lstMegapixles.setSelectedIndex(index);
-        this.lstSensor.setSelectedIndex(index);
-        this.lstStock.setSelectedIndex(index);
-    }//GEN-LAST:event_lstPriceMouseClicked
+    private void lstItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstItemsMouseClicked
+//        int index = this.lstName.getSelectedIndex();
+//
+//        this.lstMegapixles.setSelectedIndex(index);
+//        this.lstSensor.setSelectedIndex(index);
+//        this.lstStock.setSelectedIndex(index);
+//        this.lstPrice.setSelectedIndex(index);
+    }//GEN-LAST:event_lstItemsMouseClicked
 
     /**
      * Method to listen for the delete button being clicked.
@@ -549,7 +405,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void btnDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCameraActionPerformed
-        int index = this.lstName.getSelectedIndex();
+        int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code to delete");
             try {
@@ -575,7 +431,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the mouse being clicked.
      */
     private void btnIncreaseStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncreaseStockActionPerformed
-        int index = this.lstName.getSelectedIndex();
+        int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code");
             int stock;
@@ -607,7 +463,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the mouse being clicked.
      */
     private void btnPurchaseCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPurchaseCameraActionPerformed
-        int index = this.lstName.getSelectedIndex();
+        int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code");
             try {
@@ -648,7 +504,7 @@ public class MainGUI extends javax.swing.JFrame {
 
                 sc.terminateConnection();
             } catch (IOException | NullPointerException ex) {
-                
+
             } finally {
                 System.exit(0);
             }
@@ -672,7 +528,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void JMenuDeleteCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuDeleteCameraActionPerformed
-        int index = this.lstName.getSelectedIndex();
+        int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code to delete");
             try {
@@ -708,7 +564,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuIncreaseStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIncreaseStockActionPerformed
-        int index = this.lstName.getSelectedIndex();
+        int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code");
             int stock;
@@ -740,7 +596,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuPurchaseCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPurchaseCameraActionPerformed
-        int index = this.lstName.getSelectedIndex();
+        int index = this.lstItems.getSelectedIndex();
         if (index == -1) {
             String code = JOptionPane.showInputDialog("Enter product code");
             try {
@@ -785,15 +641,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuPurchaseCamera;
     private javax.swing.JMenuItem jMenuSettings;
     private javax.swing.JMenuItem jMenuUpdateListings;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JList lstMegapixles;
-    private javax.swing.JList lstName;
-    private javax.swing.JList lstPrice;
-    private javax.swing.JList lstSensor;
-    private javax.swing.JList lstStock;
+    private javax.swing.JList lstItems;
     // End of variables declaration//GEN-END:variables
 }
