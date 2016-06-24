@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author David
  * @version 23/03/2015
  */
-public class MainGUI extends javax.swing.JFrame {
+public class MainGUIOLD extends javax.swing.JFrame {
 
     private final ProductList list;
     private final ServerConnection sc;
@@ -25,7 +25,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param sc The server connection handler class.
      * @param list The ProductList class.
      */
-    public MainGUI(ServerConnection sc, ProductList list) {
+    public MainGUIOLD(ServerConnection sc, ProductList list) {
         this.sc = sc;
         this.list = list;
         initComponents();
@@ -86,24 +86,6 @@ public class MainGUI extends javax.swing.JFrame {
             sc.addCamera(newCamera);
             list.addCamera(newCamera);
             System.out.println("New camera added");
-            updateListings();
-        } catch (CodeAlreadyExistsException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-    }
-
-    /**
-     * Static method to add a new lens to the list of lenses.
-     *
-     * @param lens the new lens to be added as a Lens object.
-     */
-    public void addLens(Lens lens) {
-        try {
-            sc.addLens(lens);
-            list.addLens(lens);
-            System.out.println("New lens added");
             updateListings();
         } catch (CodeAlreadyExistsException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -202,7 +184,6 @@ public class MainGUI extends javax.swing.JFrame {
         JLabelSensor = new javax.swing.JLabel();
         jLabelStock = new javax.swing.JLabel();
         jLabelPrice = new javax.swing.JLabel();
-        btnAddLens = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuUpdateListings = new javax.swing.JMenuItem();
@@ -268,14 +249,6 @@ public class MainGUI extends javax.swing.JFrame {
         jLabelStock.setText("Stock");
 
         jLabelPrice.setText("Price");
-
-        btnAddLens.setText("Add Lens");
-        btnAddLens.setEnabled(false);
-        btnAddLens.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddLensActionPerformed(evt);
-            }
-        });
 
         jMenu1.setText("File");
 
@@ -355,29 +328,27 @@ public class MainGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnAddCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnDeleteCamera)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnIncreaseStock)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnPurchaseCamera))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabelName)
-                            .addGap(71, 71, 71)
-                            .addComponent(jLabelMegapixles)
-                            .addGap(45, 45, 45)
-                            .addComponent(JLabelSensor)
-                            .addGap(65, 65, 65)
-                            .addComponent(jLabelStock)
-                            .addGap(72, 72, 72)
-                            .addComponent(jLabelPrice)
-                            .addGap(57, 57, 57))
-                        .addComponent(jScrollPane2))
-                    .addComponent(btnAddLens, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAddCamera, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteCamera)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnIncreaseStock)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPurchaseCamera))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelName)
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabelMegapixles)
+                        .addGap(45, 45, 45)
+                        .addComponent(JLabelSensor)
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabelStock)
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabelPrice)
+                        .addGap(57, 57, 57))
+                    .addComponent(jScrollPane2))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -398,9 +369,7 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(btnDeleteCamera)
                     .addComponent(btnIncreaseStock)
                     .addComponent(btnPurchaseCamera))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddLens)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         pack();
@@ -413,7 +382,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void btnAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCameraActionPerformed
-        AddCameraGUI newAddCameraGUI = new AddCameraGUI(this);
+        //AddCameraGUI newAddCameraGUI = new AddCameraGUI(this);
     }//GEN-LAST:event_btnAddCameraActionPerformed
 
     /**
@@ -423,8 +392,8 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the mouse being clicked.
      */
     private void lstItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstItemsMouseClicked
-        if (evt.getClickCount() == 2) {
-            new CameraDetails(list.getCamera(lstItems.getSelectedIndex()), lstItems.getSelectedIndex(), this).setVisible(true);
+        if(evt.getClickCount() == 2){
+            //new CameraDetails(list.getCamera(lstItems.getSelectedIndex()), lstItems.getSelectedIndex(), this).setVisible(true);
         }
     }//GEN-LAST:event_lstItemsMouseClicked
 
@@ -551,7 +520,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void JMenuAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuAddCameraActionPerformed
-        AddCameraGUI newAddCameraGUI = new AddCameraGUI(this);
+        //AddCameraGUI newAddCameraGUI = new AddCameraGUI(this);
     }//GEN-LAST:event_JMenuAddCameraActionPerformed
 
     /**
@@ -587,7 +556,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSettingsActionPerformed
-        new Settings(this, sc, list).setVisible(true);
+        //new Settings(this, sc, list).setVisible(true);
     }//GEN-LAST:event_jMenuSettingsActionPerformed
 
     /**
@@ -654,17 +623,12 @@ public class MainGUI extends javax.swing.JFrame {
         this.updateList();
     }//GEN-LAST:event_jMenuUpdateListingsActionPerformed
 
-    private void btnAddLensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLensActionPerformed
-        new AddLensGUI(this).setVisible(true);
-    }//GEN-LAST:event_btnAddLensActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelSensor;
     private javax.swing.JMenuItem JMenuAddCamera;
     private javax.swing.JMenuItem JMenuDeleteCamera;
     private javax.swing.JMenuItem JMenuExit;
     private javax.swing.JButton btnAddCamera;
-    private javax.swing.JButton btnAddLens;
     private javax.swing.JButton btnDeleteCamera;
     private javax.swing.JButton btnIncreaseStock;
     private javax.swing.JButton btnPurchaseCamera;

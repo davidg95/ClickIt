@@ -21,7 +21,7 @@ public class Settings extends javax.swing.JFrame {
 
     private final MainGUI gui;
     private final ServerConnection sc;
-    private final CameraList list;
+    private final ProductList list;
 
     /**
      * Creates new form Settings
@@ -30,7 +30,7 @@ public class Settings extends javax.swing.JFrame {
      * @param sc the class which handles all the communication with the server.
      * @param l the class which stores the camera details.
      */
-    public Settings(MainGUI g, ServerConnection sc, CameraList l) {
+    public Settings(MainGUI g, ServerConnection sc, ProductList l) {
         this.gui = g;
         this.sc = sc;
         this.list = l;

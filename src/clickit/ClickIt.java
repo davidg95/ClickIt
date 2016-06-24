@@ -15,16 +15,13 @@ public class ClickIt {
 
     public MainGUI gui;
     public ServerConnection sc;
-    public CameraList list;
+    public ProductList list;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         System.out.println("Starting ClickIt application");
-//        list = new CameraList();
-//        sc = new ServerConnection();
-//        gui = new MainGUI(sc, list);
         new ClickIt().start();
     }
 
@@ -40,7 +37,7 @@ public class ClickIt {
      */
     public void start() {
         sc = new ServerConnection();
-        list = new CameraList(sc);
+        list = new ProductList(sc);
         gui = new MainGUI(sc, list);
     }
 }

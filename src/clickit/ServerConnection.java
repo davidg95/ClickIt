@@ -58,7 +58,7 @@ public class ServerConnection {
      */
     public void addCamera(Camera c) throws CodeAlreadyExistsException, Exception {
         try {
-            out.println("NEW," + c.getMake() + "," + c.getModel() + "," + c.getMegapixles() + "," + c.getSensor() + "," + c.getStock() + "," + c.getPrice());
+            out.println("NEWCAM," + c.getMake() + "," + c.getModel() + "," + c.getMegapixles() + "," + c.getSensor() + "," + c.getStock() + "," + c.getPrice());
             String reply = in.readLine();
             switch (reply) {
                 case "FAIL CODE":
@@ -71,13 +71,34 @@ public class ServerConnection {
     }
 
     /**
+     * Method to add a new lens to the server.
+     *
+     * @param l the Lens object to be added.
+     * @throws clickit.CodeAlreadyExistsException if the lens code already
+     * exists.
+     */
+    public void addLens(Lens l) throws CodeAlreadyExistsException, Exception {
+        try {
+            out.println("NEWLENS," + l.getMake() + "," + l.getMin_mm() + "," + l.getMax_mm() + "," + l.getMin_f() + "," + l.getMax_f() + "," + (l.isIsFull() ? "FULL" : "CROP") + "," + (l.isHasVR() ? "YES" : "NO") + "," + (l.isIsMacro() ? "YES" : "NO") + "," + (l.isHasAF() ? "YES" : "NO") + "," + l.getPrice() + "," + l.getStock());
+            String reply = in.readLine();
+            switch (reply) {
+                case "FAIL CODE":
+                    throw new CodeAlreadyExistsException(l.getCode());
+                case "FAIL":
+                    throw new Exception("ERROR COMMUNICATING WITH SERVER SERVER");
+            }
+        } catch (IOException ex) {
+        }
+    }
+    
+    /**
      * Method to purchase a camera.
      *
      * @param code the camera to purchase.
      * @throws OutOfStockException if the camera is out of stock.
-     * @throws CameraNotFoundException if the camera is not found.
+     * @throws ProductNotFoundException if the camera is not found.
      */
-    public void purchaceCamera(String code) throws OutOfStockException, CameraNotFoundException, Exception {
+    public void purchaseCamera(String code) throws OutOfStockException, ProductNotFoundException, Exception {
         out.println("PUR," + code);
         try {
             String reply = in.readLine();
@@ -85,7 +106,7 @@ public class ServerConnection {
                 case "FAIL STOCK":
                     throw new OutOfStockException(code);
                 case "FAIL NFOUND":
-                    throw new CameraNotFoundException(code);
+                    throw new ProductNotFoundException(code);
                 case "FAIL":
                     throw new Exception("ERROR COMMUNICATING WITH SERVER");
             }
@@ -98,22 +119,22 @@ public class ServerConnection {
      *
      * @param code the code to search for.
      * @return new camera object which matches the code.
-     * @throws CameraNotFoundException if not camera is found.
+     * @throws ProductNotFoundException if not camera is found.
      */
-    public Camera getCamera(String code) throws CameraNotFoundException {
+    public Camera getCamera(String code) throws ProductNotFoundException {
         out.println("GET," + code);
 
         try {
             String reply = in.readLine();
             if (reply.equals("FAIL")) {
-                throw new CameraNotFoundException(code);
+                throw new ProductNotFoundException(code);
             } else {
                 return new Camera(reply);
             }
         } catch (IOException e) {
         }
 
-        throw new CameraNotFoundException(code);
+        throw new ProductNotFoundException(code);
     }
 
     /**
@@ -121,22 +142,22 @@ public class ServerConnection {
      *
      * @param code the code to get the stock level for.
      * @return the stock level as an int.
-     * @throws CameraNotFoundException if the camera was not found.
+     * @throws ProductNotFoundException if the camera was not found.
      */
-    public int getStock(String code) throws CameraNotFoundException {
+    public int getStock(String code) throws ProductNotFoundException {
         out.println("GETSTOCK," + code);
 
         try {
             String reply = in.readLine();
             if (reply.equals("FAIL")) {
-                throw new CameraNotFoundException(code);
+                throw new ProductNotFoundException(code);
             } else {
                 return Integer.parseInt(reply);
             }
         } catch (IOException e) {
         }
 
-        throw new CameraNotFoundException(code);
+        throw new ProductNotFoundException(code);
     }
 
     /**
@@ -145,17 +166,17 @@ public class ServerConnection {
      *
      * @param code the product code of the camera.
      * @param stock the stock to be added.
-     * @throws CameraNotFoundException if the camera is not found on the server.
+     * @throws ProductNotFoundException if the camera is not found on the server.
      * @throws Exception if there is any errors with the server.
      */
-    public void increaceStock(String code, int stock) throws CameraNotFoundException, Exception {
+    public void increaceStock(String code, int stock) throws ProductNotFoundException, Exception {
         out.println("STOCKINC," + code + "," + stock);
 
         try {
             String reply = in.readLine();
             switch (reply) {
                 case "FAIL NFOUND":
-                    throw new CameraNotFoundException(code);
+                    throw new ProductNotFoundException(code);
                 case "FAIL":
                     throw new Exception("ERROR COMMUNICATING WITH SERVER");
             }
@@ -168,17 +189,17 @@ public class ServerConnection {
      * Method to delete a camera from the server by passing in its product code.
      *
      * @param code the product code of the camera to delete.
-     * @throws CameraNotFoundException if the camera is not found on the server.
+     * @throws ProductNotFoundException if the camera is not found on the server.
      * @throws Exception if there is any errors with the server.
      */
-    public void deleteCamera(String code) throws CameraNotFoundException, Exception {
+    public void deleteCamera(String code) throws ProductNotFoundException, Exception {
         out.println("DEL," + code);
 
         try {
             String reply = in.readLine();
             switch (reply) {
                 case "FAIL NFOUND":
-                    throw new CameraNotFoundException(code);
+                    throw new ProductNotFoundException(code);
                 case "FAIL":
                     throw new Exception("ERROR COMMUNICATING WITH SERVER");
             }
@@ -194,14 +215,14 @@ public class ServerConnection {
      */
     public ArrayList<Camera> getAllCameras() {
         ArrayList<Camera> cameras = new ArrayList<>();
-        out.println("GETSIZE");
+        out.println("GETCAMSIZE");
         try {
             String reply = in.readLine();
             System.out.println(reply);
             if (!reply.equals("FAIL")) {
                 int size = Integer.parseInt(reply);
                 for (int i = 0; i < size; i++) {
-                    out.println("GETINDEX," + i);
+                    out.println("GETCAMINDEX," + i);
                     cameras.add(new Camera(in.readLine()));
                 }
             }
