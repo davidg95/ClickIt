@@ -16,17 +16,18 @@ import javax.swing.JOptionPane;
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    protected final CameraList list;
+    private final CameraList list;
     private final ServerConnection sc;
 
     /**
      * Creates new form MainGUI
      *
      * @param sc The server connection handler class.
+     * @param list The CameraList class.
      */
-    public MainGUI(ServerConnection sc) {
+    public MainGUI(ServerConnection sc, CameraList list) {
         this.sc = sc;
-        list = new CameraList();
+        this.list = list;
         initComponents();
         this.setVisible(true);
         connectToServer(sc);
@@ -47,7 +48,7 @@ public class MainGUI extends javax.swing.JFrame {
      */
     public final void connectToServer(ServerConnection sc) {
         try {
-            this.sc.connect(Settings.SERVER_ADDRESS, Settings.PORT);
+            sc.connect(Settings.SERVER_ADDRESS, Settings.PORT);
             list.getListFromServer();
             this.updateList();
         } catch (IOException ex) {
@@ -381,7 +382,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void btnAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCameraActionPerformed
-        AddCameraGUI newAddCameraGUI = new AddCameraGUI();
+        AddCameraGUI newAddCameraGUI = new AddCameraGUI(this);
     }//GEN-LAST:event_btnAddCameraActionPerformed
 
     /**
@@ -392,7 +393,7 @@ public class MainGUI extends javax.swing.JFrame {
      */
     private void lstItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstItemsMouseClicked
         if(evt.getClickCount() == 2){
-            new CameraDetails(list.getCamera(lstItems.getSelectedIndex()), lstItems.getSelectedIndex()).setVisible(true);
+            new CameraDetails(list.getCamera(lstItems.getSelectedIndex()), lstItems.getSelectedIndex(), this).setVisible(true);
         }
     }//GEN-LAST:event_lstItemsMouseClicked
 
@@ -519,7 +520,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void JMenuAddCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuAddCameraActionPerformed
-        AddCameraGUI newAddCameraGUI = new AddCameraGUI();
+        AddCameraGUI newAddCameraGUI = new AddCameraGUI(this);
     }//GEN-LAST:event_JMenuAddCameraActionPerformed
 
     /**
@@ -555,7 +556,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSettingsActionPerformed
-        new Settings().setVisible(true);
+        new Settings(this, sc, list).setVisible(true);
     }//GEN-LAST:event_jMenuSettingsActionPerformed
 
     /**

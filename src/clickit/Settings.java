@@ -19,10 +19,21 @@ public class Settings extends javax.swing.JFrame {
     //public static String SERVER_ADDRESS = "127.0.0.1";
     public static int PORT = 500;
 
+    private final MainGUI gui;
+    private final ServerConnection sc;
+    private final CameraList list;
+
     /**
      * Creates new form Settings
+     *
+     * @param g the class for the main GUI.
+     * @param sc the class which handles all the communication with the server.
+     * @param l the class which stores the camera details.
      */
-    public Settings() {
+    public Settings(MainGUI g, ServerConnection sc, CameraList l) {
+        this.gui = g;
+        this.sc = sc;
+        this.list = l;
         initComponents();
         txtServer.setText(SERVER_ADDRESS);
         txtPort.setText(Integer.toString(PORT));
@@ -127,9 +138,9 @@ public class Settings extends javax.swing.JFrame {
         SERVER_ADDRESS = txtServer.getText();
         PORT = Integer.parseInt(txtPort.getText());
         try {
-            ClickIt.sc.connect(SERVER_ADDRESS, PORT);
-            ClickIt.gui.list.getListFromServer();
-            ClickIt.gui.updateList();
+            sc.connect(SERVER_ADDRESS, PORT);
+            list.getListFromServer();
+            gui.updateList();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error connecting to server");
         }

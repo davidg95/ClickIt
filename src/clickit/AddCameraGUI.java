@@ -20,11 +20,15 @@ public class AddCameraGUI extends javax.swing.JFrame {
     boolean full;
     int stock;
     double price;
+    
+    private final MainGUI gui;
 
     /**
      * Creates new form AddCameraGUI
+     * @param g the reference to the main GUI.
      */
-    public AddCameraGUI() {
+    public AddCameraGUI(MainGUI g) {
+        this.gui = g;
         initComponents();
         this.setVisible(true);
     }
@@ -223,7 +227,7 @@ public class AddCameraGUI extends javax.swing.JFrame {
 
             Camera newCamera = new Camera(this.make, this.model, this.megapixles, this.full, this.stock, this.price);
 
-            ClickIt.gui.addCamera(newCamera);
+            gui.addCamera(newCamera);
 
             this.closeForm();
         } catch (Exception e) {
@@ -284,41 +288,6 @@ public class AddCameraGUI extends javax.swing.JFrame {
      */
     private void closeForm() {
         this.setVisible(false);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddCameraGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddCameraGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddCameraGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddCameraGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddCameraGUI().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

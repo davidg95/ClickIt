@@ -17,20 +17,24 @@ public class CameraList {
 
     protected ArrayList<Camera> cameras;
 
+    private final ServerConnection sc;
+
     /**
      * Constructor method for the <code>CameraList</code> class which creates an
      * instance of the CameraList object. It creates an ArrayList of type Camera
      * and then calls the method to read from the file.
+     *
+     * @param sc the class which handles all the server communication.
      */
-    public CameraList() {
-
+    public CameraList(ServerConnection sc) {
+        this.sc = sc;
     }
 
     /**
      * Method to get the full list of cameras from the server.
      */
     public void getListFromServer() {
-        cameras = ClickIt.sc.getAllCameras();
+        cameras = sc.getAllCameras();
     }
 
     /**

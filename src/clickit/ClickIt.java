@@ -13,15 +13,34 @@ package clickit;
  */
 public class ClickIt {
 
-    public static MainGUI gui;
-    public static ServerConnection sc;
+    public MainGUI gui;
+    public ServerConnection sc;
+    public CameraList list;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         System.out.println("Starting ClickIt application");
+//        list = new CameraList();
+//        sc = new ServerConnection();
+//        gui = new MainGUI(sc, list);
+        new ClickIt().start();
+    }
+
+    /**
+     * Blank constructor for ClickIt class.
+     */
+    public ClickIt() {
+
+    }
+
+    /**
+     * Method to start the application running.
+     */
+    public void start() {
         sc = new ServerConnection();
-        gui = new MainGUI(sc);
+        list = new CameraList(sc);
+        gui = new MainGUI(sc, list);
     }
 }

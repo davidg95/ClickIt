@@ -11,18 +11,21 @@ package clickit;
  */
 public class CameraDetails extends javax.swing.JFrame {
     
-    private Camera c;
-    private int i;
-
+    private final MainGUI gui;
+    private final Camera c;
+    private final int i;
+    
     /**
      * Creates new form CameraDetails
      *
      * @param c the camera to display.
      * @param i the index of the camera.
+     * @param g the reference to the main GUI.
      */
-    public CameraDetails(Camera c, int i) {
+    public CameraDetails(Camera c, int i, MainGUI g) {
         this.c = c;
         this.i = i;
+        this.gui = g;
         initComponents();
         txtMake.setText(c.getMake());
         txtModel.setText(c.getModel());
@@ -171,7 +174,7 @@ public class CameraDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnPurchaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPurchaseActionPerformed
-        ClickIt.gui.purchaseCamera(i);
+        gui.purchaseCamera(i);
         this.dispose();
     }//GEN-LAST:event_btnPurchaseActionPerformed
 
