@@ -17,8 +17,8 @@ public class Lens {
     private String make;
     private int min_mm;
     private int max_mm;
-    private int min_f;
-    private int max_f;
+    private double min_f;
+    private double max_f;
     private boolean isFull;
     private boolean hasVR;
     private boolean isMacro;
@@ -44,7 +44,7 @@ public class Lens {
      * @param price the price of the lens.
      * @param stock the stock level.
      */
-    public Lens(String make, int min_mm, int max_mm, int min_f, int max_f, boolean isFull, boolean hasVR, boolean isMacro, boolean hasAF, double price, int stock) {
+    public Lens(String make, int min_mm, int max_mm, double min_f, double max_f, boolean isFull, boolean hasVR, boolean isMacro, boolean hasAF, double price, int stock) {
         this.make = make;
         this.min_mm = min_mm;
         this.max_mm = max_mm;
@@ -57,8 +57,8 @@ public class Lens {
         this.price = price;
         this.stock = stock;
     }
-    
-    public Lens(String notepad){
+
+    public Lens(String notepad) {
         Scanner in = new Scanner(notepad);
 
         in = in.useDelimiter(",");
@@ -74,6 +74,22 @@ public class Lens {
         this.hasAF = in.next().equals("YES");
         this.price = Double.parseDouble(in.next());
         this.stock = in.nextInt();
+    }
+
+    public String getName() {
+        String focal;
+        if (this.min_mm == this.max_mm) {
+            focal = "" + this.min_mm;
+        } else {
+            focal = min_mm + "-" + max_mm;
+        }
+        String fStop;
+        if (this.min_f == this.max_f) {
+            fStop = "" + min_f;
+        } else {
+            fStop = min_f + "-" + max_f;
+        }
+        return this.make + " " + focal + "f/" + fStop;
     }
 
     public String getMake() {
@@ -100,19 +116,19 @@ public class Lens {
         this.max_mm = max_mm;
     }
 
-    public int getMin_f() {
+    public double getMin_f() {
         return min_f;
     }
 
-    public void setMin_f(int min_f) {
+    public void setMin_f(double min_f) {
         this.min_f = min_f;
     }
 
-    public int getMax_f() {
+    public double getMax_f() {
         return max_f;
     }
 
-    public void setMax_f(int max_f) {
+    public void setMax_f(double max_f) {
         this.max_f = max_f;
     }
 

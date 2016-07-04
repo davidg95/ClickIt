@@ -16,8 +16,8 @@ public class AddLensGUI extends javax.swing.JFrame {
     String make;
     int min_mm;
     int max_mm;
-    int min_f;
-    int max_f;
+    double min_f;
+    double max_f;
     boolean full;
     boolean VR;
     boolean macro;
@@ -268,10 +268,11 @@ public class AddLensGUI extends javax.swing.JFrame {
             } else{
                 this.max_mm = Integer.parseInt(txtMaxMM.getText());
             }
+            this.min_f = Double.parseDouble(txtMinF.getText());
             if(txtMaxF.getText().equals("")){
                 this.max_f = this.min_f;
             } else{
-                this.max_f = Integer.parseInt(txtMaxF.getText());
+                this.max_f = Double.parseDouble(txtMaxF.getText());
             }
             this.full = radFull.isSelected();
             this.VR = radVR.isSelected();

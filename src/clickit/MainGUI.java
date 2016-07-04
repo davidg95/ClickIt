@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    private final ProductList list;
+    protected final ProductList list;
     private final ServerConnection sc;
 
     /**
@@ -270,7 +270,6 @@ public class MainGUI extends javax.swing.JFrame {
         jLabelPrice.setText("Price");
 
         btnAddLens.setText("Add Lens");
-        btnAddLens.setEnabled(false);
         btnAddLens.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddLensActionPerformed(evt);

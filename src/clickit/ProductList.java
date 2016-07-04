@@ -5,12 +5,8 @@
  */
 package clickit;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * A class which stores a list of objects of type Camera and Lens.
@@ -23,7 +19,7 @@ public class ProductList {
     protected List<Camera> cameras;
     protected List<Lens> lenses;
 
-    private ServerConnection sc;
+    private final ServerConnection sc;
 
     /**
      * Constructor method for the <code>CameraList</code> class which creates an
@@ -39,7 +35,7 @@ public class ProductList {
         cameras = new ArrayList<>();
         lenses = new ArrayList<>();
 
-        this.openFile();
+        //this.openFile();
     }
     
     public void getListFromServer(){
@@ -360,71 +356,71 @@ public class ProductList {
         throw new ProductNotFoundException(code);
     }
 
-    /**
-     * Method to save the contents of the list to a file.
-     */
-    public void saveToFile() {
-        try (PrintWriter writer = new PrintWriter("cameras.txt", "UTF-8")) {
-            System.out.println("Starting to write to cameras file");
-            for (int i = 0; i <= (cameras.size() - 1); i++) {
-                writer.println(cameras.get(i).toCSV());
-            }
-            System.out.println("Writing to cameras file complete");
-        } catch (IOException ex) {
-
-        }
-        try (PrintWriter writer = new PrintWriter("lenses.txt", "UTF-8")) {
-            System.out.println("Starting to write to lenses file");
-            for (int i = 0; i <= (lenses.size() - 1); i++) {
-                writer.println(lenses.get(i).toCSV());
-            }
-            System.out.println("Writing to lenses file complete");
-        } catch (IOException ex) {
-
-        }
-    }
-
-    /**
-     * Method to open a file and save it to the list.
-     */
-    public final void openFile() {
-        File file = new File("cameras.txt");
-        System.out.println("Starting to open cameras file");
-        try {
-            Scanner fileReader = new Scanner(file);
-
-            if (fileReader.hasNextLine()) {
-                do {
-                    cameras.add(new Camera(fileReader.nextLine()));
-                } while (fileReader.hasNextLine());
-                System.out.println("Open cameras file complete");
-            } else {
-                System.out.println("Cameras file is empty");
-            }
-        } catch (IOException e) {
-            try {
-                boolean createNewFile = file.createNewFile();
-            } catch (IOException ex) {
-            }
-        }
-        file = new File("lenses.txt");
-        System.out.println("Starting to open lenses file");
-        try {
-            Scanner fileReader = new Scanner(file);
-
-            if (fileReader.hasNextLine()) {
-                do {
-                    lenses.add(new Lens(fileReader.nextLine()));
-                } while (fileReader.hasNextLine());
-                System.out.println("Open lenses file complete");
-            } else {
-                System.out.println("Lenses file is empty");
-            }
-        } catch (IOException e) {
-            try {
-                boolean createNewFile = file.createNewFile();
-            } catch (IOException ex) {
-            }
-        }
-    }
+//    /**
+//     * Method to save the contents of the list to a file.
+//     */
+//    public void saveToFile() {
+//        try (PrintWriter writer = new PrintWriter("cameras.txt", "UTF-8")) {
+//            System.out.println("Starting to write to cameras file");
+//            for (int i = 0; i <= (cameras.size() - 1); i++) {
+//                writer.println(cameras.get(i).toCSV());
+//            }
+//            System.out.println("Writing to cameras file complete");
+//        } catch (IOException ex) {
+//
+//        }
+//        try (PrintWriter writer = new PrintWriter("lenses.txt", "UTF-8")) {
+//            System.out.println("Starting to write to lenses file");
+//            for (int i = 0; i <= (lenses.size() - 1); i++) {
+//                writer.println(lenses.get(i).toCSV());
+//            }
+//            System.out.println("Writing to lenses file complete");
+//        } catch (IOException ex) {
+//
+//        }
+//    }
+//
+//    /**
+//     * Method to open a file and save it to the list.
+//     */
+//    public final void openFile() {
+//        File file = new File("cameras.txt");
+//        System.out.println("Starting to open cameras file");
+//        try {
+//            Scanner fileReader = new Scanner(file);
+//
+//            if (fileReader.hasNextLine()) {
+//                do {
+//                    cameras.add(new Camera(fileReader.nextLine()));
+//                } while (fileReader.hasNextLine());
+//                System.out.println("Open cameras file complete");
+//            } else {
+//                System.out.println("Cameras file is empty");
+//            }
+//        } catch (IOException e) {
+//            try {
+//                boolean createNewFile = file.createNewFile();
+//            } catch (IOException ex) {
+//            }
+//        }
+//        file = new File("lenses.txt");
+//        System.out.println("Starting to open lenses file");
+//        try {
+//            Scanner fileReader = new Scanner(file);
+//
+//            if (fileReader.hasNextLine()) {
+//                do {
+//                    lenses.add(new Lens(fileReader.nextLine()));
+//                } while (fileReader.hasNextLine());
+//                System.out.println("Open lenses file complete");
+//            } else {
+//                System.out.println("Lenses file is empty");
+//            }
+//        } catch (IOException e) {
+//            try {
+//                boolean createNewFile = file.createNewFile();
+//            } catch (IOException ex) {
+//            }
+//        }
+//    }
 }

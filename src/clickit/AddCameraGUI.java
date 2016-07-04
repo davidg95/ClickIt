@@ -5,6 +5,7 @@
  */
 package clickit;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author 1301480
  */
-public class AddCameraGUI extends javax.swing.JFrame {
+public class AddCameraGUI extends javax.swing.JDialog {
 
     String make;
     String model;
@@ -21,7 +22,13 @@ public class AddCameraGUI extends javax.swing.JFrame {
     int stock;
     double price;
     
+    private Lens lens;
+    
+    private static JDialog dialog;
+    
     private final MainGUI gui;
+    
+    private static Camera returnCamera;
 
     /**
      * Creates new form AddCameraGUI
@@ -31,6 +38,16 @@ public class AddCameraGUI extends javax.swing.JFrame {
         this.gui = g;
         initComponents();
         this.setVisible(true);
+    }
+    
+    public static Camera showAddCameraDialog(MainGUI g){
+        dialog = new AddCameraGUI(g);
+        
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        dialog.setVisible(true);
+        
+        return returnCamera;
     }
 
     /**
@@ -59,8 +76,11 @@ public class AddCameraGUI extends javax.swing.JFrame {
         cmdClear = new javax.swing.JButton();
         cmdAdd = new javax.swing.JButton();
         cmdClose = new javax.swing.JButton();
+        btnAddLens = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtLens = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setTitle("Add New Camera");
 
         lblMake.setText("Make:");
@@ -132,6 +152,18 @@ public class AddCameraGUI extends javax.swing.JFrame {
             }
         });
 
+        btnAddLens.setText("Add Lens");
+        btnAddLens.setEnabled(false);
+        btnAddLens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddLensActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Lens:");
+
+        txtLens.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,31 +178,39 @@ public class AddCameraGUI extends javax.swing.JFrame {
                             .addComponent(lblMegapixles)
                             .addComponent(lblSensor)
                             .addComponent(lblStock)
-                            .addComponent(lblPrice)))
+                            .addComponent(lblPrice)
+                            .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(cmdClear)))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(cmdAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                        .addComponent(cmdClose))
+                        .addComponent(txtLens, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddLens)
+                        .addGap(41, 41, 41))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtMake, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(txtModel)
-                                .addComponent(txtMegapixles)
-                                .addComponent(txtStock)
-                                .addComponent(txtPrice))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(radCrop)
-                                .addGap(18, 18, 18)
-                                .addComponent(radFull)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGap(13, 13, 13)
+                                .addComponent(cmdAdd)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                                .addComponent(cmdClose))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtMake, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(txtModel)
+                                        .addComponent(txtMegapixles)
+                                        .addComponent(txtStock)
+                                        .addComponent(txtPrice))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(radCrop)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(radFull)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +240,12 @@ public class AddCameraGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPrice)
                     .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddLens)
+                    .addComponent(jLabel1)
+                    .addComponent(txtLens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdClear)
                     .addComponent(cmdAdd)
@@ -229,7 +274,7 @@ public class AddCameraGUI extends javax.swing.JFrame {
 
             gui.addCamera(newCamera);
 
-            this.closeForm();
+            this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Some fields were left blank or have not been filled in correctly");
         }
@@ -241,7 +286,7 @@ public class AddCameraGUI extends javax.swing.JFrame {
      * @param evt the event of the button being pressed.
      */
     private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
-        this.closeForm();
+        this.dispose();
     }//GEN-LAST:event_cmdCloseActionPerformed
 
     /**
@@ -283,6 +328,11 @@ public class AddCameraGUI extends javax.swing.JFrame {
         cmdAdd.doClick();
     }//GEN-LAST:event_txtPriceActionPerformed
 
+    private void btnAddLensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLensActionPerformed
+        lens = LensSelector.showGetLensDialog(gui);
+        txtLens.setText(lens.getName());
+    }//GEN-LAST:event_btnAddLensActionPerformed
+
     /**
      * Method to close the form.
      */
@@ -291,10 +341,12 @@ public class AddCameraGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddLens;
     private javax.swing.ButtonGroup btngrpSensor;
     private javax.swing.JButton cmdAdd;
     private javax.swing.JButton cmdClear;
     private javax.swing.JButton cmdClose;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblMake;
     private javax.swing.JLabel lblMegapixles;
     private javax.swing.JLabel lblModel;
@@ -303,6 +355,7 @@ public class AddCameraGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblStock;
     private javax.swing.JRadioButton radCrop;
     private javax.swing.JRadioButton radFull;
+    private javax.swing.JTextField txtLens;
     private javax.swing.JTextField txtMake;
     private javax.swing.JTextField txtMegapixles;
     private javax.swing.JTextField txtModel;
